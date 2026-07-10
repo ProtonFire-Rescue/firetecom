@@ -1,0 +1,78 @@
+---
+const links = [
+  { name: 'Inicio', href: '/' },
+  { name: 'Productos', href: '/productos' },
+  { name: 'Contacto', href: '/contacto' },
+]
+---
+
+<nav class="relative bg-black px-4 py-4 md:px-8">
+  <div class="flex items-center justify-between gap-4">
+    <a href="/" class="shrink-0">
+      <img src="/ftc_logo.svg" alt="Firetecom" class="h-8 w-auto invert md:h-10" />
+    </a>
+
+    <ul class="hidden items-center gap-8 text-white md:flex">
+      {links.map((link) => (
+        <li>
+          <a href={link.href} class="transition-colors hover:text-brand">{link.name}</a>
+        </li>
+      ))}
+      <li>
+        <a href="/solicitar-cotizacion" class="flex items-center gap-2 transition-colors hover:text-brand">
+          Solicitar cotización
+          <img src="/components/arrow_up.svg" alt="" class="border-black" />
+        </a>
+      </li>
+    </ul>
+
+    <div class="hidden items-center gap-2 md:flex">
+      <label class="sr-only" for="menu-search">Buscar producto</label>
+      <input
+        id="menu-search"
+        type="text"
+        placeholder="Producto..."
+        class="w-[220px] rounded-full bg-zinc-50 px-4 py-2 text-sm outline-none transition-all duration-300 focus:ring-2 focus:ring-zinc-400 lg:w-[300px]"
+      />
+      <button type="button" class="cursor-pointer rounded-full p-2" aria-label="Buscar">
+        <img src="/components/search.svg" alt="" class="size-5" />
+      </button>
+    </div>
+
+    <input type="checkbox" id="menu-toggle" class="peer sr-only" />
+    <label
+      for="menu-toggle"
+      class="flex size-9 cursor-pointer flex-col items-center justify-center gap-1.5 md:hidden"
+      aria-label="Abrir menú"
+    >
+      <span class="h-0.5 w-6 rounded-full bg-white"></span>
+      <span class="h-0.5 w-6 rounded-full bg-white"></span>
+      <span class="h-0.5 w-6 rounded-full bg-white"></span>
+    </label>
+  </div>
+
+  <div class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 peer-checked:grid-rows-[1fr] md:hidden">
+    <ul class="flex flex-col gap-5 overflow-hidden text-white">
+      {links.map((link) => (
+        <li class="pt-5">
+          <a href={link.href} class="transition-colors hover:text-brand">{link.name}</a>
+        </li>
+      ))}
+      <li>
+        <a href="/solicitar-cotizacion" class="flex items-center gap-2 transition-colors hover:text-brand">
+          Solicitar cotización
+          <img src="/components/arrow_up.svg" alt="" class="border-black" />
+        </a>
+      </li>
+      <li class="pb-5">
+        <label class="sr-only" for="menu-search-mobile">Buscar producto</label>
+        <input
+          id="menu-search-mobile"
+          type="text"
+          placeholder="Producto..."
+          class="w-full rounded-full bg-zinc-50 px-4 py-2 text-sm outline-none transition-all duration-300 focus:ring-2 focus:ring-zinc-400"
+        />
+      </li>
+    </ul>
+  </div>
+</nav>

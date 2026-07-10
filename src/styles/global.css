@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+:root {
+  font-family: var(--font-text);
+}
+
+@theme {
+  --color-brand: #c9202a;
+  --color-surface: #fffefd;
+  --color-muted: #d9d9d9;
+  --color-border-subtle: #5d5e62;
+  --color-text-secondary: #2e3132;
+  --font-title: "Cal Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-text: "Google Sans Flex", ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family:  var(--font-title);
+}
