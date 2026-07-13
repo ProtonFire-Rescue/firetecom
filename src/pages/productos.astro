@@ -1,0 +1,47 @@
+---
+import Layout from "../layouts/Layout.astro";
+import ProductShowcase from "../components/sections/products/ProductShowcase.tsx";
+import NormasSection from "../components/sections/products/NormasSection.tsx";
+
+const products = [
+  {
+    name: "COMUNICACIÓN",
+    url: "/catalogo?type=comunicacion",
+    image: "/resources/prod_c.png",
+  },
+  {
+    name: "SEGUIMIENTO Y MONITOREO",
+    url: "/catalogo?type=seguimiento-y-monitoreo",
+    image: "/resources/prod_s.png",
+  },
+  {
+    name: "SEGURIDAD PERSONAL",
+    url: "/catalogo?type=seguridad-personal",
+    image: "/resources/prod_seg.png",
+  },
+];
+
+const normas = [
+  {
+    name: "European Standards",
+    image: "/resources/certificados/CE.svg",
+  },
+  {
+    name: "EX Standard",
+    image: "/resources/certificados/Ex.svg",
+  },
+  {
+    name: "IECEX Standard",
+    image: "/resources/certificados/Iecex.svg",
+  },
+  {
+    name: "FC Standard",
+    image: "/resources/certificados/Fc.svg",
+  },
+];
+---
+
+<Layout title="Products" description="Products">
+  <ProductShowcase client:load products={products} />
+  <NormasSection client:load normas={normas} />
+</Layout>
