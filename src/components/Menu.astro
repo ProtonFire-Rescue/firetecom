@@ -1,22 +1,67 @@
 ---
 const links = [
   { name: 'Inicio', href: '/' },
-  { name: 'Productos', href: '/productos' },
+  {
+    name: 'Productos',
+    href: '/productos',
+    children: [{ name: 'Catálogo', href: '/catalogo' }],
+  },
   { name: 'Contacto', href: '/contacto' },
 ]
 ---
 
-<nav class="relative bg-black px-4 py-4 md:px-8">
-  <div class="flex items-center justify-between gap-4">
-    <a href="/" class="shrink-0">
+<nav class="relative bg-black px-4 py-4">
+  <div class="flex items-center justify-between gap-10">
+    <div class="w-[300px]">
+      <a href="/" class="shrink-0">
       <img src="/ftc_logo.svg" alt="Firetecom" class="h-8 w-auto invert md:h-10" />
     </a>
+    </div>
 
-    <ul class="hidden items-center gap-8 text-white md:flex">
+    <div class="flex w-[600px] justify-center">
+      <ul class="hidden items-center gap-8 text-white md:flex">
       {links.map((link) => (
-        <li>
-          <a href={link.href} class="transition-colors hover:text-brand">{link.name}</a>
-        </li>
+        link.children ? (
+          <li class="group relative">
+            <a
+              href={link.href}
+              class="flex items-center gap-1 transition-colors hover:text-brand"
+              aria-haspopup="true"
+            >
+              {link.name}
+              <svg
+                class="size-4 transition-transform duration-300 group-hover:rotate-180"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="m6 9 6 6 6-6" />
+              </svg>
+            </a>
+            {/* Puente invisible + dropdown; aparece en hover o foco por teclado */}
+            <div class="invisible absolute left-1/2 top-full z-30 -translate-x-1/2 translate-y-1 pt-3 opacity-0 transition-all duration-300 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
+              <ul class="min-w-[180px] rounded-2xl border border-white/10 bg-black/95 p-2 shadow-xl shadow-black/40 backdrop-blur">
+                {link.children.map((child) => (
+                  <li>
+                    <a
+                      href={child.href}
+                      class="block rounded-xl px-4 py-2.5 text-sm text-white/80 transition-colors hover:bg-white/5 hover:text-brand"
+                    >
+                      {child.name}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </li>
+        ) : (
+          <li>
+            <a href={link.href} class="transition-colors hover:text-brand">{link.name}</a>
+          </li>
+        )
       ))}
       <li>
         <a href="/solicitar-cotizacion" class="flex items-center gap-2 transition-colors hover:text-brand">
@@ -25,6 +70,7 @@ const links = [
         </a>
       </li>
     </ul>
+    </div>
 
     <div class="hidden items-center gap-2 md:flex">
       <label class="sr-only" for="menu-search">Buscar producto</label>
@@ -56,6 +102,15 @@ const links = [
       {links.map((link) => (
         <li class="pt-5">
           <a href={link.href} class="transition-colors hover:text-brand">{link.name}</a>
+          {link.children && (
+            <ul class="mt-3 flex flex-col gap-3 border-l border-white/15 pl-4">
+              {link.children.map((child) => (
+                <li>
+                  <a href={child.href} class="text-sm text-white/70 transition-colors hover:text-brand">{child.name}</a>
+                </li>
+              ))}
+            </ul>
+          )}
         </li>
       ))}
       <li>
