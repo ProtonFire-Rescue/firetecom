@@ -32,13 +32,15 @@ const solutions: SolutionCard[] = [
 function SolutionCard({ solution, index }: { solution: SolutionCard; index: number }) {
   return (
     <motion.div
-      className="border border-muted bg-white rounded-[20px] p-8 shadow-lg"
+      className="group relative overflow-hidden border border-muted bg-white rounded-[20px] p-8 shadow-lg"
       whileHover={{ scale: 1.03, boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)' }}
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.6, delay: index * 0.15, ease: [0.4, 0, 0.2, 1] }}
     >
+      {/* Barra de acento que crece al hover */}
+      <div className="absolute top-0 left-0 h-1 w-0 bg-brand transition-all duration-500 ease-out group-hover:w-full" />
       <div className="flex flex-col gap-4">
         <h3 className="text-[24px] leading-[32px] text-black font-normal font-title">
           {solution.title}
@@ -53,8 +55,11 @@ function SolutionCard({ solution, index }: { solution: SolutionCard; index: numb
 
 export default function SolucionesOperacion() {
   return (
-    <section className="bg-black py-16 px-4 text-white">
-      <div className="max-w-[1535px] mx-auto">
+    <section className="relative overflow-hidden bg-black py-16 px-4 text-white">
+      {/* Glows rojos ambientales para dar profundidad, consistente con el resto del sitio */}
+      <div className="absolute top-0 right-1/4 w-96 h-96 bg-red-500/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 left-1/4 w-80 h-80 bg-red-500/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="max-w-[1535px] mx-auto relative">
         <motion.div 
           className="flex flex-col gap-2 pb-12"
           initial={{ opacity: 0, y: 30 }}

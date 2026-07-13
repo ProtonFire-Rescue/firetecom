@@ -9,12 +9,12 @@ export default function CTARedirect() {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8 }}
         >
-            <div className="absolute inset-0 bg-gradient-to-br from-red-500/5 via-transparent to-black/5 pointer-events-none"></div>
-            <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-red-500/10 rounded-full blur-3xl pointer-events-none"></div>
-            <div className="absolute bottom-1/4 left-1/4 w-64 h-64 bg-red-500/5 rounded-full blur-2xl pointer-events-none"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-red-500/[0.03] via-transparent to-black/[0.03] pointer-events-none"></div>
+            <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-red-500/[0.06] rounded-full blur-3xl pointer-events-none"></div>
+            <div className="absolute bottom-1/4 left-1/4 w-64 h-64 bg-red-500/[0.03] rounded-full blur-2xl pointer-events-none"></div>
             
             <motion.h2
-                className="text-[clamp(2rem,5vw,60px)] font-title max-w-[700px] text-center leading-[1.1] relative"
+                className="text-[clamp(2rem,5vw,60px)] tracking-tight font-title max-w-[700px] text-center leading-[1.1] relative"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}

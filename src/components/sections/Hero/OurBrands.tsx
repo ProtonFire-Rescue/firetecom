@@ -26,7 +26,7 @@ export default function OurBrands() {
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: 0.8 }}
             >
-                <h2 className="text-[clamp(2rem,5vw,60px)] font-title">Nuestros Aliados</h2>
+                <h2 className="text-[clamp(2rem,5vw,60px)] tracking-tight font-title">Nuestros Aliados</h2>
                 <div className="p-[1px] w-full bg-gradient-to-r from-red-500 via-red-500 to-gray-500 rounded-lg shadow-lg shadow-red-500/20"></div>
             </motion.div>
             <motion.p
@@ -42,7 +42,7 @@ export default function OurBrands() {
                 {brands.map((brand, index) => (
                     <motion.div
                         key={brand.name}
-                        className="flex flex-col items-center gap-2 w-[160px] h-[90px] sm:w-[200px] sm:h-[100px] border rounded-[20px] border-zinc-200 shadow-lg hover:shadow-xl transition-shadow duration-300"
+                        className="flex flex-col items-center gap-2 w-[160px] h-[90px] sm:w-[200px] sm:h-[100px] bg-white rounded-[20px] border border-black/5 shadow-sm ring-1 ring-black/[0.02] hover:shadow-md hover:border-brand/15 transition-all duration-300"
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true, margin: "-100px" }}

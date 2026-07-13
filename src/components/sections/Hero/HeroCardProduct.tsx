@@ -21,14 +21,14 @@ export default function HeroCardProduct({ img, title, description, url }: HeroCa
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8, delay: 0.1 }}
           >
-            <div className="absolute inset-0 bg-gradient-to-br from-red-500/10 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-            <img src={img} alt={title} className="w-full h-full object-cover rounded-2xl shadow-xl transition-transform duration-500 group-hover:scale-105" />
+            <div className="absolute inset-0 z-10 bg-gradient-to-br from-red-500/10 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+            <img src={img} alt={title} className="w-full h-full object-cover rounded-2xl ring-1 ring-black/5 shadow-2xl shadow-black/10 transition-transform duration-500 group-hover:scale-105" />
           </motion.div>
 
           {/* Right Content */}
           <div className="flex-1 space-y-10 max-w-[645px]">
             <motion.h2
-              className="text-[clamp(2rem,4vw,50px)] leading-[1.1] text-black font-normal font-title"
+              className="text-[clamp(2rem,4vw,50px)] leading-[1.1] tracking-tight text-black font-normal font-title"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}

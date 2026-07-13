@@ -1,11 +1,12 @@
 ---
 import Layout from '../layouts/Layout.astro'
-import Hero from '../components/home/Hero.astro'
-import HeroCardProduct from '../components/sections/Hero/HeroCardProduct.tsx'
-import SolucionesOperacion from '../components/sections/Hero/SolucionesOperacion.tsx'
-import {ScreenMaintenance, ScreenAbout} from '../components/sections/Hero/AnimatedAccordion.tsx'
-import OurBrands from '../components/sections/Hero/OurBrands.tsx'
-import CTARedirect from '../components/sections/Hero/CTARedirect.tsx'
+import Hero from '../components/Hero.astro'
+import HeroCardProduct from '../components/sections/hero/HeroCardProduct.tsx'
+import SolucionesOperacion from '../components/sections/hero/SolucionesOperacion.tsx'
+import {ScreenMaintenance, ScreenAbout} from '../components/sections/hero/AnimatedAccordion.tsx'
+import OurBrands from '../components/sections/hero/OurBrands.tsx'
+import CTARedirect from '../components/sections/hero/CTARedirect.tsx'
+import SectionDivider from '../components/ui/SectionDivider.astro'
 ---
 
 <Layout
@@ -16,7 +17,7 @@ import CTARedirect from '../components/sections/Hero/CTARedirect.tsx'
     <Hero />
     
     <div class="relative py-20 px-6">
-      <div class="absolute inset-0 bg-gradient-to-r from-red-500/5 via-transparent to-red-500/5"></div>
+      <div class="absolute inset-0 bg-gradient-to-r from-red-500/[0.02] via-transparent to-red-500/[0.02]"></div>
       <div class="max-w-[1535px] mx-auto relative">
         <div class="flex flex-col gap-16">
           <HeroCardProduct client:load img="./resources/bodycam.png" title="Comunicación y seguimiento" description="Sistemas integrados de comunicación y seguimiento en tiempo real que permiten coordinar al personal en campo y conocer su ubicación durante toda la operación. Pensados para mantener el enlace constante entre el centro de mando y cada unidad desplegada, mejorando la coordinación y la seguridad del equipo." url="#"/>
@@ -25,33 +26,23 @@ import CTARedirect from '../components/sections/Hero/CTARedirect.tsx'
       </div>
     </div>
     
-    <div class="relative py-8">
-      <div class="absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-red-500/30 to-transparent"></div>
-    </div>
+    <SectionDivider />
     
     <SolucionesOperacion client:load />
     
-    <div class="relative py-8">
-      <div class="absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-red-500/30 to-transparent"></div>
-    </div>
+    <SectionDivider />
     
     <ScreenMaintenance client:load />
     
-    <div class="relative py-8">
-      <div class="absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-red-500/30 to-transparent"></div>
-    </div>
+    <SectionDivider />
     
     <OurBrands client:load />
     
-    <div class="relative py-8">
-      <div class="absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-red-500/30 to-transparent"></div>
-    </div>
+    <SectionDivider />
     
     <ScreenAbout client:load />
     
-    <div class="relative py-8">
-      <div class="absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-red-500/30 to-transparent"></div>
-    </div>
+    <SectionDivider />
     
     <CTARedirect client:load />
   </main>
