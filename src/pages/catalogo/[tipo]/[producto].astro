@@ -1,0 +1,318 @@
+---
+import Layout from '../../../layouts/Layout.astro'
+import ProductDetailGallery from '../../../components/sections/products/ProductDetailGallery'
+import ProductDetailAccordion from '../../../components/sections/products/ProductDetailAccordion'
+import ProductInquiryActions from '../../../components/sections/products/ProductInquiryActions'
+
+const { tipo, producto } = Astro.params;
+
+// Número de WhatsApp de contacto (formato internacional, solo dígitos).
+// TODO: reemplazar por el número real de Fire Tecom.
+const whatsappNumber = '521234567890'
+
+// Mock data — en producción vendrá de una API/CMS
+const productData = {
+  name: '5G body worn camera-S1',
+  marca: 'Grand Time',
+  modelo: 'Camera-S1',
+  tipo: 'Cámara Corporal / Cámara',
+  description: [
+    'S1 es la primera cámara corporal de la industria basada en una solución 5G. Lanzamos con el S1 una nueva captura segura forma. Android 10.0, puede adquirir, gestionar, distribuir 4K 4G, reconocimiento inteligente con IA, cómoda con el buen precio, de energía, larga duración de trabajo, después una pantalla total es 1.6 pulgadas, ademas de un puerto privado y cualitativo, su cámara de cuerpo MOTORIZACIÓN/NFC.',
+    'Puede hacer frente a la siguiente red negro/5 bandas. A través de la perfecta integrador de bloque con 5G asistencia 100-4200 y la nube inteligente con IA aplicada con el sistema industrial 5G la cámara se puede instalar con el software tecnología de inteligencia de transmisión de video 5G, comando y funciones de programación.'
+  ],
+  usoPrincipal: [
+    'Vigilancia y seguridad en operaciones de campo',
+    'Grabación de evidencias en tiempo real',
+    'Comunicación crítica en entornos de rescate',
+    'Monitoreo inteligente con IA integrada',
+    'Transmisión de video en vivo vía 5G'
+  ],
+  normas: [
+    'Certificación IP68 – Resistencia al agua y polvo',
+    'CE – Conformidad Europea',
+    'FCC – Federal Communications Commission',
+    'MIL-STD-810G – Estándar militar de resistencia',
+    'ATEX – Uso en atmósferas explosivas'
+  ],
+  images: [
+    '/resources/bodycam.png',
+    '/resources/prod_c.png',
+    '/resources/prod_s.png',
+    '/resources/prod_seg.png',
+  ],
+  badge: 'IP68',
+}
+
+// Productos relacionados (mock)
+const relatedProducts = [
+  {
+    name: '5G body worn camera-S1',
+    description: "S1 is the industry's first Body Worn Camera based on a 5G solution.",
+    image: '/resources/bodycam.png',
+    badge: 'IP68',
+    url: `/catalogo/${tipo}/${producto}`,
+  },
+  {
+    name: '5G body worn camera-S1',
+    description: "S1 is the industry's first Body Worn Camera based on a 5G solution.",
+    image: '/resources/bodycam.png',
+    badge: 'IP67',
+    url: `/catalogo/${tipo}/${producto}`,
+  },
+  {
+    name: '5G body worn camera-S1',
+    description: "S1 is the industry's first Body Worn Camera based on a 5G solution.",
+    image: '/resources/bodycam.png',
+    badge: 'IP67',
+    url: `/catalogo/${tipo}/${producto}`,
+  },
+]
+
+// Breadcrumb labels
+const tipoLabel = tipo
+  ? tipo.charAt(0).toUpperCase() + tipo.slice(1).replace(/-/g, ' ')
+  : 'Categoría'
+const productoLabel = productData.name
+---
+
+<Layout
+  title={`${productData.name} | Fire Tecom`}
+  description={productData.description[0]}
+>
+  <main class="bg-white">
+
+    <!-- ─── Breadcrumb ───────────────────────────────────────────── -->
+    <nav class="px-6 py-3 border-b border-gray-100" aria-label="Breadcrumb">
+      <div class="max-w-[1280px] mx-auto flex items-center gap-1.5 text-xs text-gray-500 flex-wrap">
+        <a href="/" class="hover:text-brand transition-colors">Home</a>
+        <span>/</span>
+        <a href="/catalogo" class="hover:text-brand transition-colors">Catálogo</a>
+        <span>/</span>
+        <a href={`/catalogo?type=${tipo}`} class="hover:text-brand transition-colors capitalize">
+          {tipoLabel}
+        </a>
+        <span>/</span>
+        <span class="text-gray-800 font-medium">{productoLabel}</span>
+      </div>
+    </nav>
+
+    <!-- ─── Product Detail ───────────────────────────────────────── -->
+    <section class="px-6 py-8">
+      <div class="max-w-[1280px] mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-10 items-start">
+
+          <!-- Left: Gallery -->
+          <div class="lg:sticky lg:top-24">
+            <ProductDetailGallery
+              client:load
+              images={productData.images}
+              title={productData.name}
+              badge={productData.badge}
+            />
+          </div>
+
+          <!-- Right: Info -->
+          <div class="flex flex-col gap-0">
+
+            <!-- Eyebrow -->
+            <span class="reveal text-[11px] font-semibold uppercase tracking-[0.18em] text-brand mb-2" style="--d:0ms">
+              {productData.tipo}
+            </span>
+
+            <!-- Title -->
+            <h1 class="reveal text-2xl sm:text-3xl font-bold text-gray-900 mb-4 leading-tight" style="--d:60ms">
+              {productData.name}
+            </h1>
+
+            <!-- Meta row: Marca / Modelo / Tipo -->
+            <div class="reveal flex flex-wrap gap-3 mb-6" style="--d:120ms">
+              {[
+                { label: 'Marca', value: productData.marca },
+                { label: 'Modelo', value: productData.modelo },
+                { label: 'Tipo', value: productData.tipo },
+              ].map((m) => (
+                <div class="flex flex-col rounded-xl border border-gray-200/70 bg-gray-50/60 px-3.5 py-2">
+                  <span class="text-[10px] text-gray-400 uppercase tracking-wider mb-0.5">{m.label}</span>
+                  <span class="text-sm font-semibold text-gray-800">{m.value}</span>
+                </div>
+              ))}
+            </div>
+
+            <!-- Accordions -->
+            <div class="reveal" style="--d:180ms">
+              <ProductDetailAccordion
+                client:load
+                items={[
+                  {
+                    label: 'Descripción',
+                    content: productData.description,
+                    variant: 'paragraphs',
+                    defaultOpen: true,
+                  },
+                  {
+                    label: 'Uso principal',
+                    content: productData.usoPrincipal,
+                    defaultOpen: false,
+                  },
+                  {
+                    label: 'Normas y certificaciones',
+                    content: productData.normas,
+                    defaultOpen: false,
+                  },
+                ]}
+              />
+            </div>
+
+            <!-- CTA Buttons -->
+            <div class="reveal mt-7 pt-1" style="--d:240ms">
+              <ProductInquiryActions
+                client:load
+                productName={productData.name}
+                productModel={productData.modelo}
+                productPath={`/catalogo/${tipo}/${producto}`}
+                whatsappNumber={whatsappNumber}
+              />
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Otros productos ──────────────────────────────────────── -->
+    <section class="bg-[#1a1a1a] py-14 px-6 mt-8">
+      <div class="max-w-[1280px] mx-auto">
+        <h2 data-reveal class="text-white text-2xl font-bold mb-8">
+          Otros productos que podrían<br class="hidden sm:block"/> interesarte
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {relatedProducts.map((p, i) => (
+            <div data-reveal style={`transition-delay:${i * 90}ms`} class="flex">
+            <a
+              href={p.url}
+              class="group relative w-full bg-[#242424] rounded-2xl overflow-hidden flex flex-col transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-black/40"
+            >
+              <!-- Arrow icon -->
+              <div class="absolute top-3 right-3 z-10 w-8 h-8 bg-black/60 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path d="M3 11L11 3M11 3H5M11 3v6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+
+              <!-- Product image area -->
+              <div class="relative bg-zinc-800 aspect-[4/3] flex items-center justify-center p-6">
+                <img
+                  src={p.image}
+                  alt={p.name}
+                  class="max-h-full max-w-full object-contain transition-transform duration-500 group-hover:scale-105"
+                />
+                {p.badge && (
+                  <span class="absolute bottom-3 right-3 text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-brand/10 text-brand ring-1 ring-inset ring-brand/15">
+                    {p.badge}
+                  </span>
+                )}
+              </div>
+
+              <!-- Info -->
+              <div class="p-4 flex flex-col gap-1">
+                <h3 class="text-white text-sm font-semibold leading-snug group-hover:text-brand transition-colors">
+                  {p.name}
+                </h3>
+                <p class="text-zinc-400 text-xs leading-relaxed line-clamp-2">
+                  {p.description}
+                </p>
+              </div>
+            </a>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Descarga del catálogo ────────────────────────────────── -->
+    <section class="relative overflow-hidden min-h-[340px] flex items-center">
+      <!-- Background image -->
+      <img
+        src="/resources/banner_detail.png"
+        alt="Descarga catálogo"
+        class="absolute inset-0 w-full h-full object-cover"
+      />
+      <!-- Overlay -->
+      <div class="absolute inset-0 bg-black/55"></div>
+
+      <!-- Content -->
+      <div class="relative z-10 px-6 py-16 w-full">
+        <div class="max-w-[700px]" data-reveal>
+          <h2 class="text-white text-3xl sm:text-4xl font-bold leading-tight mb-6">
+            Descarga y accede a nuestro<br/>
+            catálogo de productos que te<br/>
+            ofrecemos.
+          </h2>
+          <a
+            href="#"
+            id="btn-descargar-catalogo"
+            class="inline-flex items-center gap-2 rounded-lg bg-white text-black px-6 py-3 text-sm font-semibold transition-all hover:bg-gray-100 hover:shadow-lg"
+          >
+            Descargar
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M7 2v7m0 0L4 6.5M7 9l3-2.5M2 12h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</Layout>
+
+<style>
+  /* Entrada escalonada de la columna de info (arriba del pliegue) */
+  .reveal {
+    opacity: 0;
+    animation: revealUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: var(--d, 0ms);
+  }
+
+  /* Reveal on-scroll para secciones inferiores */
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(26px);
+    transition:
+      opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  [data-reveal].is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @keyframes revealUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal,
+    [data-reveal] {
+      animation: none !important;
+      transition: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
+</style>
+
+<script>
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          io.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
+  );
+  document.querySelectorAll("[data-reveal]").forEach((el) => io.observe(el));
+</script>

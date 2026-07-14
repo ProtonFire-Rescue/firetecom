@@ -12,7 +12,7 @@ const PRODUCTS_DATA: Product[] = [
     type: "Cámara Corporal",
     brand: "Grand Time",
     badge: "IP68",
-    url: "#"
+    url: "/catalogo/videovigilancia/5g-body-worn-camera-s1"
   },
   {
     id: "2",
@@ -23,7 +23,7 @@ const PRODUCTS_DATA: Product[] = [
     type: "Radiotransmisor",
     brand: "Caltta",
     badge: "IP68",
-    url: "#"
+    url: "/catalogo/comunicacion/radio-portatil-caltta-ph600"
   },
   {
     id: "3",
@@ -34,7 +34,7 @@ const PRODUCTS_DATA: Product[] = [
     type: "Cámara Corporal",
     brand: "Grand Time",
     badge: "IP67",
-    url: "#"
+    url: "/catalogo/videovigilancia/body-worn-camera-s2-pro"
   },
   {
     id: "4",
@@ -45,7 +45,7 @@ const PRODUCTS_DATA: Product[] = [
     type: "Localizador GPS",
     brand: "Grand Time",
     badge: "IP68",
-    url: "#"
+    url: "/catalogo/seguimiento-y-monitoreo/dispositivo-seguimiento-gps-r"
   },
   {
     id: "5",
@@ -56,7 +56,7 @@ const PRODUCTS_DATA: Product[] = [
     type: "Sensor de Casco",
     brand: "Yaesu",
     badge: "IP68",
-    url: "#"
+    url: "/catalogo/seguridad-personal/sensor-inteligente-casco"
   },
   {
     id: "6",
@@ -67,7 +67,7 @@ const PRODUCTS_DATA: Product[] = [
     type: "Radiotransmisor",
     brand: "Caltta",
     badge: "IP68",
-    url: "#"
+    url: "/catalogo/comunicacion/radio-enlace-caltta-ph690"
   },
   {
     id: "7",
@@ -78,7 +78,7 @@ const PRODUCTS_DATA: Product[] = [
     type: "Cámara Corporal",
     brand: "Grand Time",
     badge: "IP67",
-    url: "#"
+    url: "/catalogo/seguridad-personal/camara-termica-corporal-t1"
   },
   {
     id: "8",
@@ -89,7 +89,7 @@ const PRODUCTS_DATA: Product[] = [
     type: "Localizador GPS",
     brand: "Caltta",
     badge: "IP67",
-    url: "#"
+    url: "/catalogo/seguimiento-y-monitoreo/estacion-monitoreo-m1"
   },
   {
     id: "9",
@@ -100,7 +100,7 @@ const PRODUCTS_DATA: Product[] = [
     type: "Cámara Corporal",
     brand: "Grand Time",
     badge: "IP68",
-    url: "#"
+    url: "/catalogo/videovigilancia/camara-tactica-4g-hd"
   }
 ];
 

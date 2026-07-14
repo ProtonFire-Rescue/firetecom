@@ -51,9 +51,14 @@ export default function ContactForm() {
       })
       if (res.ok) {
         reset()
-      } else {
-        setError('root', { message: 'No se pudo enviar el mensaje. Intenta de nuevo.' })
+        return
       }
+      // Leemos el mensaje del servidor (y el detalle en desarrollo) para poder diagnosticar.
+      const info = await res.json().catch(() => null)
+      const message = info?.detail
+        ? `${info.error ?? 'Error'} — ${info.detail}`
+        : info?.error || 'No se pudo enviar el mensaje. Intenta de nuevo.'
+      setError('root', { message })
     } catch {
       setError('root', { message: 'Error de conexión. Revisa tu internet e intenta de nuevo.' })
     }

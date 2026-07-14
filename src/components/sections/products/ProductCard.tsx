@@ -19,58 +19,47 @@ interface ProductCardProps {
 
 export default function ProductCard({ product, index }: ProductCardProps) {
   return (
-    <motion.div
+    <motion.a
+      href={product.url}
       layout
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 20 }}
-      transition={{ duration: 0.5, delay: (index % 3) * 0.1 }}
-      whileHover={{ y: -8 }}
-      className="group flex flex-col w-full bg-white rounded-3xl overflow-hidden cursor-pointer"
+      transition={{ duration: 0.4, delay: (index % 3) * 0.08 }}
+      className="group relative flex flex-col overflow-hidden rounded-2xl bg-white ring-1 ring-inset ring-gray-200/80 cursor-pointer transition-shadow duration-300 hover:shadow-xl hover:shadow-gray-900/[0.07]"
+      style={{ willChange: 'transform' }}
+      whileHover={{ y: -4 }}
     >
-      {/* Contenedor de Imagen con Fondo Gris Claro */}
-      <div className="relative w-full aspect-[4/3] bg-zinc-100/80 rounded-3xl flex items-center justify-center overflow-hidden p-8 ring-1 ring-black/[0.04] shadow-sm transition-all duration-500 group-hover:bg-zinc-100 group-hover:shadow-xl group-hover:shadow-black/10 group-hover:ring-brand/15">
-        {/* Sheen premium: brillo diagonal sutil que aparece al hover */}
-        <div className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-tr from-transparent via-white/40 to-transparent opacity-0 -translate-x-full transition-all duration-700 ease-out group-hover:translate-x-full group-hover:opacity-100" />
+      {/* Arrow icon — aparece en hover */}
+      <div className="absolute top-3 right-3 z-10 w-8 h-8 bg-brand rounded-full flex items-center justify-center opacity-0 -translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 pointer-events-none">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M3 11L11 3M11 3H5M11 3v6" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </div>
 
-        {/* Enlace circular de flecha superior derecha */}
-        <a 
-          href={product.url}
-          target="_self"
-          className="absolute top-4 right-4 z-10 w-11 h-11 bg-black rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:bg-[#1a1a1a] shadow-md group-hover:shadow-lg"
-          aria-label={`Ver detalles de ${product.name}`}
-        >
-          <img 
-            src="/components/arrow_up.svg" 
-            alt="" 
-            className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" 
-          />
-        </a>
-
-        {/* Imagen del Producto */}
+      {/* Área de imagen */}
+      <div className="relative aspect-[4/3] h-[450px] flex items-center justify-center p-6 overflow-hidden bg-gradient-to-br from-zinc-50 to-zinc-100">
         <img
           src={product.image}
           alt={product.name}
           className="max-h-full max-w-full object-contain transition-transform duration-500 group-hover:scale-105"
         />
-
-        {/* Badge de especificaciones (por ejemplo, IP68) */}
         {product.badge && (
-          <span className="absolute bottom-4 right-4 rounded-full px-4 py-1 text-xs font-title font-bold bg-red-100/90 text-brand select-none">
+          <span className="absolute bottom-3 right-3 text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-brand/10 text-brand ring-1 ring-inset ring-brand/15 select-none pointer-events-none">
             {product.badge}
           </span>
         )}
       </div>
 
-      {/* Información del Producto */}
-      <div className="flex flex-col mt-5 px-1 space-y-2">
-        <h3 className="font-title text-xl text-black transition-colors duration-300 group-hover:text-brand">
+      {/* Info */}
+      <div className="p-4 flex flex-col gap-1.5 border-t border-gray-100">
+        <h3 className="text-gray-900 text-sm font-semibold leading-snug group-hover:text-brand transition-colors duration-200">
           {product.name}
         </h3>
-        <p className="font-text text-sm text-zinc-500 leading-relaxed line-clamp-2">
+        <p className="text-gray-500 text-xs leading-relaxed line-clamp-2">
           {product.description}
         </p>
       </div>
-    </motion.div>
+    </motion.a>
   );
 }
