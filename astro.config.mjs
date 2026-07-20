@@ -16,7 +16,7 @@ export default defineConfig({
   site: SITE_URL,
   output: 'server',
   adapter: cloudflare({
-    imageService: 'passthrough',
+    imageService: 'cloudflare-binding',
 
   }),
   integrations: [react()],

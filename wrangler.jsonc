@@ -20,5 +20,5 @@
   "observability": {
     "enabled": true
   },
-  "pages_build_output_dir": ".dist/client",
+  "$schema": "./node_modules/wrangler/config-schema.json",
 }
