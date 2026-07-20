@@ -20,5 +20,6 @@
   // Logs y métricas del Worker en el dashboard de Cloudflare.
   "observability": {
     "enabled": true
-  }
+  },
+  "pages_build_output_dir": ".dist/client",
 }
