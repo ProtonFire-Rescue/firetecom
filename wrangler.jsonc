@@ -1,4 +1,5 @@
 {
+  "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "firetecom-web",
   // Fecha de compatibilidad del runtime de Workers. Súbela periódicamente para
   // habilitar mejoras del runtime: https://developers.cloudflare.com/workers/configuration/compatibility-dates/
@@ -22,5 +23,8 @@
     "CONTACT_EMAIL": "[EMAIL_ADDRESS]",
     "RESEND_API_KEY": "re_3KWgDK76_F4diS3E2X425hH5tUATZuiYt",
     "VITE_STRAPI_URL": "https://webprotonfire-production.up.railway.app"
+  },
+  "observability": {
+    "enabled": true
   }
 }
