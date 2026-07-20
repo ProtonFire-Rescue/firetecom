@@ -19,11 +19,6 @@
   // y en local con un archivo .dev.vars (ver .env.example).
   // Logs y métricas del Worker en el dashboard de Cloudflare.
   "pages_build_output_dir": ".dist/client",
-  "vars": {
-    "CONTACT_EMAIL": "[EMAIL_ADDRESS]",
-    "RESEND_API_KEY": "re_3KWgDK76_F4diS3E2X425hH5tUATZuiYt",
-    "VITE_STRAPI_URL": "https://webprotonfire-production.up.railway.app"
-  },
   "observability": {
     "enabled": true
   }

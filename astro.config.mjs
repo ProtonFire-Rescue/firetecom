@@ -15,7 +15,10 @@ const SITE_URL = 'https://firetecom.com.ec';
 export default defineConfig({
   site: SITE_URL,
   output: 'server',
-  adapter: cloudflare(),
+  adapter: cloudflare({
+    imageService: 'passthrough',
+
+  }),
   integrations: [react()],
   vite: {
     plugins: [tailwindcss()]
