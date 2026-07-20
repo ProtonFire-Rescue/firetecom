@@ -10,26 +10,29 @@
  * - SSR/Dev/Build friendly: funciona en todos los modos de Astro
  */
 
+import { workerEnv } from './runtime-env';
+
 /** Marca cuyos datos consume este sitio (filtro `personal_brands[nombre]`) */
 const PERSONAL_BRAND = 'Telcom';
 
-type RuntimeEnv = Record<string, unknown>;
-
-function getRuntimeEnvFromContext(ctx: any): RuntimeEnv | undefined {
-  try {
-    return ctx?.platform?.env ?? ctx?.locals?.runtime?.env;
-  } catch {
-    return undefined;
-  }
-}
-
+/**
+ * Resuelve la URL del backend de Strapi.
+ *
+ * Orden de precedencia:
+ *  1. `opts.baseUrl` explícito.
+ *  2. Runtime env de Workers (si se define VITE_STRAPI_URL como var de wrangler).
+ *  3. `import.meta.env.VITE_STRAPI_URL` — inlineado en build desde `.env` (dev/prod).
+ *  4. localhost por defecto.
+ *
+ * Los parámetros `astro`/`context` se mantienen por compatibilidad con las
+ * llamadas existentes, pero ya no se usan para resolver el env (el acceso a
+ * `Astro.locals.runtime.env` fue removido en Astro v6).
+ */
 export function resolveBackendUrl(opts?: { baseUrl?: string; astro?: any; context?: any }) {
-  const ctx = opts?.astro ?? opts?.context;
-  const runtimeEnv = getRuntimeEnvFromContext(ctx);
-  const runtimeUrl = runtimeEnv?.VITE_STRAPI_URL;
-  const viteUrl = import.meta.env.VITE_STRAPI_URL;
-
-  return (opts?.baseUrl ?? (typeof runtimeUrl === 'string' ? runtimeUrl : undefined) ?? viteUrl ?? 'http://localhost:1337') as string;
+  return (opts?.baseUrl ??
+    workerEnv('VITE_STRAPI_URL') ??
+    import.meta.env.VITE_STRAPI_URL ??
+    'http://localhost:1337') as string;
 }
 
 

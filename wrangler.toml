@@ -1,9 +1,0 @@
-name = "firetecom-web"
-compatibility_date = "2025-01-01"
-compatibility_flags = ["nodejs_compat"]
-
-[vars]
-# Public environment variables (non-sensitive)
-# CONTACT_EMAIL = "your@email.com"
-
-# Secrets are set via: pnpm wrangler secret put RESEND_API_KEY

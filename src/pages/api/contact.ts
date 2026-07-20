@@ -3,6 +3,7 @@ import { Resend } from 'resend'
 import { z } from 'zod'
 import { render } from 'react-email'
 import ContactEmail from '../../emails/ContactEmail'
+import { workerEnv } from '../../services/runtime-env'
 
 const schema = z.object({
   name: z.string().min(2),
@@ -38,8 +39,10 @@ export const POST: APIRoute = async ({ request }) => {
       return json({ error: 'Datos inválidos. Revisa el formulario e intenta de nuevo.' }, 400)
     }
 
-    const apiKey = import.meta.env.RESEND_API_KEY
-    const to = import.meta.env.CONTACT_EMAIL
+    // En Workers los secrets viven en el runtime env; import.meta.env es el
+    // fallback para desarrollo local (lee de .env / .dev.vars).
+    const apiKey = workerEnv('RESEND_API_KEY') ?? import.meta.env.RESEND_API_KEY
+    const to = workerEnv('CONTACT_EMAIL') ?? import.meta.env.CONTACT_EMAIL
     if (!apiKey || !to) {
       const missing = [!apiKey && 'RESEND_API_KEY', !to && 'CONTACT_EMAIL'].filter(Boolean).join(', ')
       console.error('[contact] Falta configuración de correo:', missing)

@@ -1,0 +1,26 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "firetecom-web",
+  // Fecha de compatibilidad del runtime de Workers. Súbela periódicamente para
+  // habilitar mejoras del runtime: https://developers.cloudflare.com/workers/configuration/compatibility-dates/
+  "compatibility_date": "2026-07-01",
+  // nodejs_compat: requerido por el adapter de Astro y por dependencias como Resend.
+  "compatibility_flags": ["nodejs_compat"],
+
+  // El adapter @astrojs/cloudflare genera el `main`, los `assets` y los bindings
+  // (SESSION KV, IMAGES) en dist/server/wrangler.json durante `astro build`.
+  // `wrangler deploy` desde la raíz usa esa config automáticamente vía el
+  // redirect en .wrangler/deploy/config.json — no declares `main` aquí.
+
+  // Variables públicas (NO secretos). Ejemplo:
+  // "vars": { "CONTACT_EMAIL": "contacto@firetecom.com.ec" },
+
+  // Los secretos (RESEND_API_KEY) se cargan con:
+  //   npx wrangler secret put RESEND_API_KEY
+  // y en local con un archivo .dev.vars (ver .env.example).
+
+  // Logs y métricas del Worker en el dashboard de Cloudflare.
+  "observability": {
+    "enabled": true
+  }
+}

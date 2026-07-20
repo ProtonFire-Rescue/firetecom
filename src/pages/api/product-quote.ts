@@ -3,6 +3,7 @@ import { Resend } from 'resend'
 import { z } from 'zod'
 import { render } from 'react-email'
 import ProductQuoteEmail from '../../emails/ProductQuoteEmail'
+import { workerEnv } from '../../services/runtime-env'
 
 const schema = z.object({
   name: z.string().min(2),
@@ -44,8 +45,8 @@ export const POST: APIRoute = async ({ request }) => {
 
     // 3) Configuración del servidor (env vars). Si faltan, es un error nuestro,
     //    no del usuario: respondemos 503 con un mensaje claro y lo dejamos en logs.
-    const apiKey = import.meta.env.RESEND_API_KEY
-    const to = import.meta.env.CONTACT_EMAIL
+    const apiKey = workerEnv('RESEND_API_KEY') ?? import.meta.env.RESEND_API_KEY
+    const to = workerEnv('CONTACT_EMAIL') ?? import.meta.env.CONTACT_EMAIL
     if (!apiKey || !to) {
       const missing = [!apiKey && 'RESEND_API_KEY', !to && 'CONTACT_EMAIL'].filter(Boolean).join(', ')
       console.error('[product-quote] Falta configuración de correo:', missing)
