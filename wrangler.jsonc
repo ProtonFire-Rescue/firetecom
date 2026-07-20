@@ -20,5 +20,11 @@
   "observability": {
     "enabled": true
   },
-  "$schema": "./node_modules/wrangler/config-schema.json",
+  "pages_build_output_dir": "./dist",
+  "kv_namespaces": [
+    {
+      "binding": "SESSION",
+      "id": "14a747e7952e643b5f905f936a005ac7"
+    }
+  ]
 }
