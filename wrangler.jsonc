@@ -18,7 +18,6 @@
   //   npx wrangler secret put RESEND_API_KEY
   // y en local con un archivo .dev.vars (ver .env.example).
   // Logs y métricas del Worker en el dashboard de Cloudflare.
-  "pages_build_output_dir": ".dist/client",
   "observability": {
     "enabled": true
   }
