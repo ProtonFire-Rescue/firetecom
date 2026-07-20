@@ -7,6 +7,8 @@ interface Props {
   title: string
   description?: string
   image?: string
+  /** JSON-LD adicional específico de la página (ej. Product en el detalle). */
+  jsonLd?: Record<string, unknown> | Array<Record<string, unknown>>
 }
 
 const SITE_NAME = 'Fire Tecom'
@@ -14,11 +16,24 @@ const {
   title,
   description = 'Equipos y dispositivos tácticos, de rescate y comunicación para operaciones profesionales.',
   image = '/resources/banner_products.png',
+  jsonLd,
 } = Astro.props
 
 const pageTitle = title === SITE_NAME ? title : `${title} | ${SITE_NAME}`
 const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 const socialImage = new URL(image, Astro.site)
+
+// Datos estructurados de la organización (presentes en todas las páginas).
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: SITE_NAME,
+  url: Astro.site?.toString(),
+  logo: new URL('/favicon.svg', Astro.site).toString(),
+  description:
+    'Proveedor de equipos y sistemas de comunicación crítica, seguimiento y seguridad personal para bomberos e instituciones de seguridad en Ecuador.',
+  areaServed: 'EC',
+}
 ---
 
 <!doctype html>
@@ -46,6 +61,17 @@ const socialImage = new URL(image, Astro.site)
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={socialImage} />
+
+    <!-- Datos estructurados (JSON-LD) -->
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(organizationSchema)}
+    />
+    {
+      jsonLd && (
+        <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+      )
+    }
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

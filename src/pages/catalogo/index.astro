@@ -33,7 +33,10 @@ const brands = [...new Set(products.map((product) => product.brand))]
     .sort((a, b) => a.localeCompare(b));
 ---
 
-<Layout title="Catálogo">
+<Layout
+    title="Catálogo de productos"
+    description="Catálogo completo de equipos de comunicación crítica, seguimiento y seguridad personal. Filtra por categoría, tipo y marca para encontrar la solución operativa que necesitas."
+>
     <!-- Hero Banner de Productos -->
     <section
         class="relative w-full h-[400px] sm:h-[450px] flex items-center overflow-hidden"

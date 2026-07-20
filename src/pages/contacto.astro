@@ -4,7 +4,10 @@ import ContactForm from "../components/ContactForm.tsx";
 import ContactInfo from "../components/ContactInfo.tsx";
 ---
 
-<Layout title="Contacto">
+<Layout
+    title="Contacto"
+    description="¿Necesitas equipamiento táctico o de comunicación crítica? Contáctanos y un asesor de Fire Tecom te ayudará a encontrar la solución adecuada para tu operación."
+>
     <section class="grid grid-cols-2 h-auto">
         <div class="w-full h-full flex justify-center items-center py-20">
             <ContactForm client:only="react" />

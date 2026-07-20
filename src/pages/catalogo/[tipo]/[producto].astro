@@ -47,11 +47,33 @@ const tipoLabel = tipo
   ? tipo.charAt(0).toUpperCase() + tipo.slice(1).replace(/-/g, ' ')
   : 'Categoría'
 const productoLabel = productData.name
+
+// Descripción para metadatos: primer párrafo del producto.
+const metaDescription = Array.isArray(productData.description)
+  ? productData.description[0]
+  : productData.description
+
+// Datos estructurados Product para resultados enriquecidos en Google.
+const productSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: productData.name,
+  description: metaDescription,
+  image: productData.images,
+  brand: {
+    '@type': 'Brand',
+    name: productData.marca,
+  },
+  model: productData.modelo,
+  category: productData.tipo,
+}
 ---
 
 <Layout
-  title={`${productData.name} | Fire Tecom`}
-  description={productData.description[0]}
+  title={productData.name}
+  description={metaDescription}
+  image={productData.images?.[0]}
+  jsonLd={productSchema}
 >
   <main class="bg-white">
 

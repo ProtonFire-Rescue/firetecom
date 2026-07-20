@@ -1,5 +1,5 @@
 User-agent: *
 Allow: /
 
-# TODO: actualizar con el dominio real de producción (ver SITE_URL en astro.config.mjs)
-Sitemap: https://example.com/sitemap-index.xml
+# Sitemap dinámico: incluye páginas estáticas + todas las URLs de producto de la API.
+Sitemap: https://firetecom.com.ec/sitemap.xml
