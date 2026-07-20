@@ -1,6 +1,36 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import ProductCatalog from "../../components/sections/products/ProductCatalog.tsx";
+import {
+    getCategories,
+    getTypes,
+    getProducts,
+} from "../../services/fetch";
+
+const fetch_categories = await getCategories({ astro: Astro });
+const fetch_types = await getTypes({ astro: Astro });
+const fetch_products = await getProducts({ astro: Astro });
+
+const categories = fetch_categories.data.map((category) => category.name);
+const types = fetch_types.data.map((type) => type.name);
+const products = fetch_products.data.map((product: any) => ({
+    id: product.id,
+    name: product.name,
+    description: product.description,
+    category: product.categories[0].name,
+    type: product.type.name,
+    brand: product.brand.name,
+    image: product.images[0].url,
+    badge: product.certifications[0].name,
+    url: `/catalogo/${product.categories[0].name.toLowerCase().replace(" ", "-")}/${product.name}`,
+}));
+
+// Las marcas se derivan de los productos (ya filtrados por Telcom en la API),
+// así solo aparecen las marcas realmente asociadas a Telcom — evita depender
+// de una relación personal_brands en el content type `brand`.
+const brands = [...new Set(products.map((product) => product.brand))]
+    .filter(Boolean)
+    .sort((a, b) => a.localeCompare(b));
 ---
 
 <Layout title="Catálogo">
@@ -39,7 +69,13 @@ import ProductCatalog from "../../components/sections/products/ProductCatalog.ts
         </div>
     </section>
 
-    <ProductCatalog client:load />
+    <ProductCatalog
+        client:load
+        categories={categories}
+        types={types}
+        brands={brands}
+        products={products}
+    />
 </Layout>
 
 <style>

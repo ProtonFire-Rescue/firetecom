@@ -1,133 +1,272 @@
 ---
+import ScreenSearch from "./sections/hero/ScreenSearch";
+import { getCategories, getProducts } from "../services/fetch";
+
 const links = [
-  { name: 'Inicio', href: '/' },
+  { name: "Inicio", href: "/" },
   {
-    name: 'Productos',
-    href: '/productos',
-    children: [{ name: 'Catálogo', href: '/catalogo' }],
+    name: "Productos",
+    href: "/productos",
+    children: [{ name: "Catálogo", href: "/catalogo" }],
   },
-  { name: 'Contacto', href: '/contacto' },
-]
+  { name: "Contacto", href: "/contacto" },
+];
+
+const fetch_categories = await getCategories({ astro: Astro });
+const fetch_products = await getProducts({ astro: Astro });
+
+const categories = fetch_categories.data.map((category: any) => category.name);
+const searchProducts = fetch_products.data.map((product: any) => ({
+  id: product.id,
+  name: product.name,
+  category: product.categories?.[0]?.name ?? "",
+  image: product.images?.[0]?.url ?? "",
+  url: `/catalogo/${(product.categories?.[0]?.name ?? "").toLowerCase().replace(" ", "-")}/${product.name}`,
+}));
 ---
 
-<nav class="relative bg-black px-4 py-4">
-  <div class="flex items-center justify-between gap-10">
-    <div class="w-[300px]">
-      <a href="/" class="shrink-0">
-      <img src="/ftc_logo.svg" alt="Firetecom" class="h-8 w-auto invert md:h-10" />
+<nav
+  id="site-nav"
+  class="sticky top-0 z-50 bg-black px-4 py-4 transition-transform duration-300 ease-out will-change-transform"
+>
+  <div class="mx-auto flex max-w-[1535px] items-center justify-between gap-6">
+    <!-- Logo -->
+    <a href="/" class="shrink-0">
+      <img
+        src="/ftc_logo.svg"
+        alt="Firetecom"
+        class="h-8 w-auto invert md:h-10"
+      />
     </a>
-    </div>
 
-    <div class="flex w-[600px] justify-center">
-      <ul class="hidden items-center gap-8 text-white md:flex">
-      {links.map((link) => (
-        link.children ? (
-          <li class="group relative">
-            <a
-              href={link.href}
-              class="flex items-center gap-1 transition-colors hover:text-brand"
-              aria-haspopup="true"
-            >
-              {link.name}
-              <svg
-                class="size-4 transition-transform duration-300 group-hover:rotate-180"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+    <!-- Navegación de escritorio -->
+    <ul class="hidden flex-1 items-center justify-center gap-8 text-white md:flex">
+      {
+        links.map((link) =>
+          link.children ? (
+            <li class="group relative">
+              <a
+                href={link.href}
+                class="flex items-center gap-1 transition-colors hover:text-brand"
+                aria-haspopup="true"
               >
-                <path d="m6 9 6 6 6-6" />
-              </svg>
-            </a>
-            {/* Puente invisible + dropdown; aparece en hover o foco por teclado */}
-            <div class="invisible absolute left-1/2 top-full z-30 -translate-x-1/2 translate-y-1 pt-3 opacity-0 transition-all duration-300 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
-              <ul class="min-w-[180px] rounded-2xl border border-white/10 bg-black/95 p-2 shadow-xl shadow-black/40 backdrop-blur">
-                {link.children.map((child) => (
-                  <li>
-                    <a
-                      href={child.href}
-                      class="block rounded-xl px-4 py-2.5 text-sm text-white/80 transition-colors hover:bg-white/5 hover:text-brand"
-                    >
-                      {child.name}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </li>
-        ) : (
-          <li>
-            <a href={link.href} class="transition-colors hover:text-brand">{link.name}</a>
-          </li>
+                {link.name}
+                <svg
+                  class="size-4 transition-transform duration-300 group-hover:rotate-180"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="m6 9 6 6 6-6" />
+                </svg>
+              </a>
+              {/* Puente invisible + dropdown; aparece en hover o foco por teclado */}
+              <div class="invisible absolute left-1/2 top-full z-30 -translate-x-1/2 translate-y-1 pt-3 opacity-0 transition-all duration-300 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
+                <ul class="min-w-[180px] rounded-2xl border border-white/10 bg-black/95 p-2 shadow-xl shadow-black/40 backdrop-blur">
+                  {link.children.map((child) => (
+                    <li>
+                      <a
+                        href={child.href}
+                        class="block rounded-xl px-4 py-2.5 text-sm text-white/80 transition-colors hover:bg-white/5 hover:text-brand"
+                      >
+                        {child.name}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </li>
+          ) : (
+            <li>
+              <a href={link.href} class="transition-colors hover:text-brand">
+                {link.name}
+              </a>
+            </li>
+          ),
         )
-      ))}
+      }
       <li>
-        <a href="/solicitar-cotizacion" class="flex items-center gap-2 transition-colors hover:text-brand">
+        <a
+          href="/solicitar-cotizacion"
+          class="flex items-center gap-2 transition-colors hover:text-brand"
+        >
           Solicitar cotización
           <img src="/components/arrow_up.svg" alt="" class="border-black" />
         </a>
       </li>
     </ul>
-    </div>
 
-    <div class="hidden items-center gap-2 md:flex">
-      <label class="sr-only" for="menu-search">Buscar producto</label>
-      <input
-        id="menu-search"
-        type="text"
-        placeholder="Producto..."
-        class="w-[220px] rounded-full bg-zinc-50 px-4 py-2 text-sm outline-none transition-all duration-300 focus:ring-2 focus:ring-zinc-400 lg:w-[300px]"
+    <!-- Controles a la derecha: búsqueda + botón hamburguesa -->
+    <div class="flex shrink-0 items-center gap-1">
+      <ScreenSearch
+        client:load
+        categories={categories}
+        products={searchProducts}
       />
-      <button type="button" class="cursor-pointer rounded-full p-2" aria-label="Buscar">
-        <img src="/components/search.svg" alt="" class="size-5" />
+
+      <button
+        id="menu-toggle"
+        type="button"
+        class="cursor-pointer rounded-full p-2 text-white transition-colors hover:bg-white/10 md:hidden"
+        aria-label="Abrir menú"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <svg
+          data-icon="open"
+          class="size-6"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.75"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+        <svg
+          data-icon="close"
+          class="hidden size-6"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.75"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M6 6l12 12M18 6L6 18" />
+        </svg>
       </button>
     </div>
-
-    <input type="checkbox" id="menu-toggle" class="peer sr-only" />
-    <label
-      for="menu-toggle"
-      class="flex size-9 cursor-pointer flex-col items-center justify-center gap-1.5 md:hidden"
-      aria-label="Abrir menú"
-    >
-      <span class="h-0.5 w-6 rounded-full bg-white"></span>
-      <span class="h-0.5 w-6 rounded-full bg-white"></span>
-      <span class="h-0.5 w-6 rounded-full bg-white"></span>
-    </label>
   </div>
 
-  <div class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 peer-checked:grid-rows-[1fr] md:hidden">
-    <ul class="flex flex-col gap-5 overflow-hidden text-white">
-      {links.map((link) => (
-        <li class="pt-5">
-          <a href={link.href} class="transition-colors hover:text-brand">{link.name}</a>
-          {link.children && (
-            <ul class="mt-3 flex flex-col gap-3 border-l border-white/15 pl-4">
-              {link.children.map((child) => (
-                <li>
-                  <a href={child.href} class="text-sm text-white/70 transition-colors hover:text-brand">{child.name}</a>
-                </li>
-              ))}
-            </ul>
-          )}
+  <!-- Panel desplegable móvil -->
+  <div
+    id="mobile-menu"
+    class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out md:hidden"
+  >
+    <div class="overflow-hidden">
+      <ul class="flex flex-col gap-1 pt-4 text-white">
+        {
+          links.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                class="block rounded-xl px-3 py-2.5 transition-colors hover:bg-white/5 hover:text-brand"
+              >
+                {link.name}
+              </a>
+              {link.children && (
+                <ul class="ml-3 flex flex-col gap-1 border-l border-white/15 pl-3">
+                  {link.children.map((child) => (
+                    <li>
+                      <a
+                        href={child.href}
+                        class="block rounded-xl px-3 py-2 text-sm text-white/70 transition-colors hover:bg-white/5 hover:text-brand"
+                      >
+                        {child.name}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </li>
+          ))
+        }
+        <li class="mt-1">
+          <a
+            href="/solicitar-cotizacion"
+            class="flex items-center gap-2 rounded-xl px-3 py-2.5 transition-colors hover:bg-white/5 hover:text-brand"
+          >
+            Solicitar cotización
+            <img src="/components/arrow_up.svg" alt="" class="border-black" />
+          </a>
         </li>
-      ))}
-      <li>
-        <a href="/solicitar-cotizacion" class="flex items-center gap-2 transition-colors hover:text-brand">
-          Solicitar cotización
-          <img src="/components/arrow_up.svg" alt="" class="border-black" />
-        </a>
-      </li>
-      <li class="pb-5">
-        <label class="sr-only" for="menu-search-mobile">Buscar producto</label>
-        <input
-          id="menu-search-mobile"
-          type="text"
-          placeholder="Producto..."
-          class="w-full rounded-full bg-zinc-50 px-4 py-2 text-sm outline-none transition-all duration-300 focus:ring-2 focus:ring-zinc-400"
-        />
-      </li>
-    </ul>
+      </ul>
+    </div>
   </div>
 </nav>
+
+<script>
+  const nav = document.getElementById("site-nav");
+  const toggle = document.getElementById("menu-toggle");
+  const mobileMenu = document.getElementById("mobile-menu");
+
+  // ── Menú móvil (hamburguesa) ──────────────────────────────────────────────
+  let menuOpen = false;
+
+  const setMenu = (open: boolean) => {
+    if (!mobileMenu || !toggle) return;
+    menuOpen = open;
+    mobileMenu.classList.toggle("grid-rows-[1fr]", open);
+    mobileMenu.classList.toggle("grid-rows-[0fr]", !open);
+    toggle.setAttribute("aria-expanded", String(open));
+    toggle.setAttribute("aria-label", open ? "Cerrar menú" : "Abrir menú");
+    toggle
+      .querySelector<SVGElement>('[data-icon="open"]')
+      ?.classList.toggle("hidden", open);
+    toggle
+      .querySelector<SVGElement>('[data-icon="close"]')
+      ?.classList.toggle("hidden", !open);
+  };
+
+  toggle?.addEventListener("click", () => setMenu(!menuOpen));
+
+  // Cerrar el menú al pasar a escritorio
+  window
+    .matchMedia("(min-width: 768px)")
+    .addEventListener("change", (e) => {
+      if (e.matches) setMenu(false);
+    });
+
+  // ── Ocultar/mostrar el nav al hacer scroll ────────────────────────────────
+  if (nav) {
+    let lastScrollY = window.scrollY;
+    let ticking = false;
+    let stopTimer: ReturnType<typeof setTimeout>;
+
+    // Umbral mínimo para empezar a ocultar (deja ver el nav arriba del todo)
+    const THRESHOLD = 80;
+    const hiddenClass = "-translate-y-full";
+
+    const show = () => nav.classList.remove(hiddenClass);
+    const hide = () => nav.classList.add(hiddenClass);
+
+    const onScroll = () => {
+      const currentY = window.scrollY;
+
+      // Con el menú móvil abierto, el nav permanece siempre visible
+      if (menuOpen || currentY <= THRESHOLD) {
+        // Cerca del inicio: siempre visible
+        show();
+      } else if (currentY > lastScrollY) {
+        // Scroll hacia abajo → ocultar
+        hide();
+      } else {
+        // Scroll hacia arriba → mostrar
+        show();
+      }
+
+      lastScrollY = currentY;
+      ticking = false;
+
+      // Si el scroll se detiene, vuelve a aparecer
+      clearTimeout(stopTimer);
+      stopTimer = setTimeout(show, 200);
+    };
+
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (!ticking) {
+          window.requestAnimationFrame(onScroll);
+          ticking = true;
+        }
+      },
+      { passive: true },
+    );
+  }
+</script>

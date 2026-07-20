@@ -6,9 +6,19 @@ import '../styles/global.css'
 interface Props {
   title: string
   description?: string
+  image?: string
 }
 
-const { title, description = 'Firetecom' } = Astro.props
+const SITE_NAME = 'Fire Tecom'
+const {
+  title,
+  description = 'Equipos y dispositivos tácticos, de rescate y comunicación para operaciones profesionales.',
+  image = '/resources/banner_products.png',
+} = Astro.props
+
+const pageTitle = title === SITE_NAME ? title : `${title} | ${SITE_NAME}`
+const canonicalURL = new URL(Astro.url.pathname, Astro.site)
+const socialImage = new URL(image, Astro.site)
 ---
 
 <!doctype html>
@@ -18,11 +28,31 @@ const { title, description = 'Firetecom' } = Astro.props
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
+    <title>{pageTitle}</title>
     <meta name="description" content={description} />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Google+Sans+Flex:opsz,wght@6..144,1..1000&display=swap" rel="stylesheet">
-    <title>{title}</title>
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE_NAME} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:locale" content="es_ES" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Google+Sans+Flex:opsz,wght@6..144,1..1000&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body class="overflow-x-hidden">
     <Menu />

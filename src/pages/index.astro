@@ -1,12 +1,15 @@
 ---
-import Layout from '../layouts/Layout.astro'
-import Hero from '../components/Hero.astro'
-import HeroCardProduct from '../components/sections/hero/HeroCardProduct.tsx'
-import SolucionesOperacion from '../components/sections/hero/SolucionesOperacion.tsx'
-import {ScreenMaintenance, ScreenAbout} from '../components/sections/hero/AnimatedAccordion.tsx'
-import OurBrands from '../components/sections/hero/OurBrands.tsx'
-import CTARedirect from '../components/sections/hero/CTARedirect.tsx'
-import SectionDivider from '../components/ui/SectionDivider.astro'
+import Layout from "../layouts/Layout.astro";
+import Hero from "../components/Hero.astro";
+import HeroCardProduct from "../components/sections/hero/HeroCardProduct.tsx";
+import SolucionesOperacion from "../components/sections/hero/SolucionesOperacion.tsx";
+import {
+  ScreenMaintenance,
+  ScreenAbout,
+} from "../components/sections/hero/AnimatedAccordion.tsx";
+import OurBrands from "../components/sections/hero/OurBrands.tsx";
+import CTARedirect from "../components/sections/hero/CTARedirect.tsx";
+import SectionDivider from "../components/ui/SectionDivider.astro";
 ---
 
 <Layout
@@ -15,35 +18,50 @@ import SectionDivider from '../components/ui/SectionDivider.astro'
 >
   <main class="bg-gradient-to-b from-white via-gray-50 to-white">
     <Hero />
-    
+
     <div class="relative py-20 px-6">
-      <div class="absolute inset-0 bg-gradient-to-r from-red-500/[0.02] via-transparent to-red-500/[0.02]"></div>
+      <div
+        class="absolute inset-0 bg-gradient-to-r from-red-500/[0.02] via-transparent to-red-500/[0.02]"
+      >
+      </div>
       <div class="max-w-[1535px] mx-auto relative">
         <div class="flex flex-col gap-16">
-          <HeroCardProduct client:load img="./resources/bodycam.png" title="Comunicación y seguimiento" description="Sistemas integrados de comunicación y seguimiento en tiempo real que permiten coordinar al personal en campo y conocer su ubicación durante toda la operación. Pensados para mantener el enlace constante entre el centro de mando y cada unidad desplegada, mejorando la coordinación y la seguridad del equipo." url="#"/>
-          <HeroCardProduct client:load img="./resources/calttaradio.png" title="Equipos de comunicación por radio" description="Equipos de radiocomunicación capaces de generar su propia señal y frecuencia para enlazar a otras radios de la misma marca, sin depender de infraestructura externa. Ideales para zonas sin cobertura, donde el equipo crea una red de comunicación autónoma y operativa de inmediato." url="#"/>
+          <HeroCardProduct
+            client:visible
+            img="/resources/bodycam.png"
+            title="Comunicación y seguimiento"
+            description="Sistemas integrados de comunicación y seguimiento en tiempo real que permiten coordinar al personal en campo y conocer su ubicación durante toda la operación. Pensados para mantener el enlace constante entre el centro de mando y cada unidad desplegada, mejorando la coordinación y la seguridad del equipo."
+            url="/catalogo/seguimiento-comunicaciones"
+          />
+          <HeroCardProduct
+            client:visible
+            img="/resources/calttaradio.png"
+            title="Equipos de comunicación por radio"
+            description="Equipos de radiocomunicación capaces de generar su propia señal y frecuencia para enlazar a otras radios de la misma marca, sin depender de infraestructura externa. Ideales para zonas sin cobertura, donde el equipo crea una red de comunicación autónoma y operativa de inmediato."
+            url="/catalogo?type=comunicacion"
+          />
         </div>
       </div>
     </div>
-    
+
     <SectionDivider />
-    
-    <SolucionesOperacion client:load />
-    
+
+    <SolucionesOperacion client:visible />
+
     <SectionDivider />
-    
-    <ScreenMaintenance client:load />
-    
+
+    <ScreenMaintenance client:visible />
+
     <SectionDivider />
-    
-    <OurBrands client:load />
-    
+
+    <OurBrands client:visible />
+
     <SectionDivider />
-    
-    <ScreenAbout client:load />
-    
+
+    <ScreenAbout client:visible />
+
     <SectionDivider />
-    
-    <CTARedirect client:load />
+
+    <CTARedirect client:visible />
   </main>
 </Layout>

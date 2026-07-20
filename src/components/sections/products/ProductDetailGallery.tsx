@@ -114,12 +114,6 @@ export default function ProductDetailGallery({ images, title, badge }: ProductDe
             </svg>
             Ampliar
           </div>
-
-          {badge && (
-            <span className="pointer-events-none absolute left-4 top-4 rounded-full bg-brand/10 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-brand ring-1 ring-inset ring-brand/20 backdrop-blur-sm">
-              {badge}
-            </span>
-          )}
         </div>
 
         {/* Thumbnails */}
@@ -129,11 +123,10 @@ export default function ProductDetailGallery({ images, title, badge }: ProductDe
               <button
                 key={i}
                 onClick={() => setSelectedIndex(i)}
-                className={`relative aspect-square w-20 flex-shrink-0 overflow-hidden rounded-xl bg-zinc-100 transition-all duration-300 sm:w-auto ${
-                  selectedIndex === i
+                className={`relative aspect-square w-20 flex-shrink-0 overflow-hidden rounded-xl bg-zinc-100 transition-all duration-300 sm:w-auto ${selectedIndex === i
                     ? 'ring-2 ring-brand ring-offset-2'
                     : 'opacity-55 ring-1 ring-inset ring-zinc-200 hover:opacity-100 hover:ring-zinc-300'
-                }`}
+                  }`}
                 aria-label={`Ver imagen ${i + 1}`}
                 aria-current={selectedIndex === i}
               >
@@ -226,11 +219,10 @@ export default function ProductDetailGallery({ images, title, badge }: ProductDe
                 <button
                   key={i}
                   onClick={() => setLightboxIndex(i)}
-                  className={`h-12 w-12 overflow-hidden rounded-lg border-2 transition-all duration-200 ${
-                    lightboxIndex === i
+                  className={`h-12 w-12 overflow-hidden rounded-lg border-2 transition-all duration-200 ${lightboxIndex === i
                       ? 'scale-110 border-white opacity-100'
                       : 'border-transparent opacity-40 hover:opacity-70'
-                  }`}
+                    }`}
                   aria-label={`Ver imagen ${i + 1}`}
                 >
                   <img src={img} alt="" className="h-full w-full bg-white/10 object-contain p-1" draggable={false} />

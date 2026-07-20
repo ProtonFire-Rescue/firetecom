@@ -60,8 +60,8 @@ export default function NormasSection({ normas }: { normas: Norma[] }) {
             viewport={{ once: true, margin: '-80px' }}
             transition={{ duration: 0.7, delay: 0.3 }}
           >
-            <ButtonCTA label="Cotizar" url="#" />
-            <ButtonCTA label="Contactar" url="#" />
+            <ButtonCTA label="Cotizar" url="/contacto" />
+            <ButtonCTA label="Contactar" url="/contacto" />
           </motion.div>
         </div>
       </div>

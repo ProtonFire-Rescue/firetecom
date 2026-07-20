@@ -1,121 +1,29 @@
 import { useState, useMemo, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import ProductCard, { type Product } from './ProductCard';
+import ProductCard from './ProductCard';
 
-const PRODUCTS_DATA: Product[] = [
-  {
-    id: "1",
-    name: "5G body worn camera-S1",
-    description: "S1 is the industry's first Body Worn Camera based on a 5G solution. High resolution, real-time video streaming, and rugged construction.",
-    image: "/resources/bodycam.png",
-    category: "Videovigilancia",
-    type: "Cámara Corporal",
-    brand: "Grand Time",
-    badge: "IP68",
-    url: "/catalogo/videovigilancia/5g-body-worn-camera-s1"
-  },
-  {
-    id: "2",
-    name: "Radio Portátil Caltta PH600",
-    description: "Radio digital DMR profesional con GPS integrado, botón de pánico y diseño ultrarresistente para condiciones extremas de rescate.",
-    image: "/resources/calttaradio.png",
-    category: "Comunicación",
-    type: "Radiotransmisor",
-    brand: "Caltta",
-    badge: "IP68",
-    url: "/catalogo/comunicacion/radio-portatil-caltta-ph600"
-  },
-  {
-    id: "3",
-    name: "Body Worn Camera S2 Pro",
-    description: "Cámara corporal para bomberos con grabación en baja luz, almacenamiento seguro de evidencia y batería de larga duración.",
-    image: "/resources/bodycam.png",
-    category: "Videovigilancia",
-    type: "Cámara Corporal",
-    brand: "Grand Time",
-    badge: "IP67",
-    url: "/catalogo/videovigilancia/body-worn-camera-s2-pro"
-  },
-  {
-    id: "4",
-    name: "Dispositivo de Seguimiento GPS-R",
-    description: "Localizador táctico satelital para bomberos y brigadistas. Envío de coordenadas en tiempo real y alerta de inactividad.",
-    image: "/resources/prod_s.png",
-    category: "Seguimiento y monitoreo",
-    type: "Localizador GPS",
-    brand: "Grand Time",
-    badge: "IP68",
-    url: "/catalogo/seguimiento-y-monitoreo/dispositivo-seguimiento-gps-r"
-  },
-  {
-    id: "5",
-    name: "Sensor Inteligente de Casco",
-    description: "Monitoreo continuo de temperatura externa, gases tóxicos y constantes vitales para la seguridad del bombero.",
-    image: "/resources/prod_seg.png",
-    category: "Seguridad personal",
-    type: "Sensor de Casco",
-    brand: "Yaesu",
-    badge: "IP68",
-    url: "/catalogo/seguridad-personal/sensor-inteligente-casco"
-  },
-  {
-    id: "6",
-    name: "Radio de Enlace Caltta PH690",
-    description: "Equipo de radiocomunicación robusto con pantalla a color y cancelación activa de ruido para ambientes ruidosos de incendios.",
-    image: "/resources/calttaradio.png",
-    category: "Comunicación",
-    type: "Radiotransmisor",
-    brand: "Caltta",
-    badge: "IP68",
-    url: "/catalogo/comunicacion/radio-enlace-caltta-ph690"
-  },
-  {
-    id: "7",
-    name: "Cámara Térmica Corporal T1",
-    description: "Cámara portátil con sensor térmico para búsqueda y rescate de personas atrapadas en estructuras colapsadas.",
-    image: "/resources/prod_seg.png",
-    category: "Seguridad personal",
-    type: "Cámara Corporal",
-    brand: "Grand Time",
-    badge: "IP67",
-    url: "/catalogo/seguridad-personal/camara-termica-corporal-t1"
-  },
-  {
-    id: "8",
-    name: "Estación de Monitoreo M1",
-    description: "Consola táctica para el seguimiento en tiempo real de hasta 20 rescatistas equipados con bodycams y localizadores.",
-    image: "/resources/prod_c.png",
-    category: "Seguimiento y monitoreo",
-    type: "Localizador GPS",
-    brand: "Caltta",
-    badge: "IP67",
-    url: "/catalogo/seguimiento-y-monitoreo/estacion-monitoreo-m1"
-  },
-  {
-    id: "9",
-    name: "Cámara Táctica 4G HD",
-    description: "Cámara móvil de despliegue rápido para centros de mando temporales en zonas de desastre natural o incendios forestales.",
-    image: "/resources/prod_s.png",
-    category: "Videovigilancia",
-    type: "Cámara Corporal",
-    brand: "Grand Time",
-    badge: "IP68",
-    url: "/catalogo/videovigilancia/camara-tactica-4g-hd"
-  }
-];
+interface Product {
+  id: string;
+  name: string;
+  description: string;
+  image: string;
+  category: string;
+  type: string;
+  brand: string;
+  badge: string;
+  url: string;
+}
 
-const CATEGORIES = ["Comunicación", "Seguimiento y monitoreo", "Seguridad personal", "Videovigilancia"];
-const TYPES = ["Cámara Corporal", "Radiotransmisor", "Localizador GPS", "Sensor de Casco"];
-const BRANDS = ["Grand Time", "Caltta", "Yaesu"];
+
 
 const ITEMS_PER_PAGE = 6;
 
-export default function ProductCatalog() {
+export default function ProductCatalog({ categories, types, brands, products }: { categories: string[], types: string[], brands: string[], products: Product[] }) {
   const [search, setSearch] = useState('');
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
   const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
-  
+
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
   const [isTypesOpen, setIsTypesOpen] = useState(false);
@@ -127,29 +35,29 @@ export default function ProductCatalog() {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search);
-      
+
       const qParam = params.get('q');
       if (qParam) {
         setSearch(qParam);
       }
 
       // Función helper para normalizar cadenas (quitar acentos, espacios, guiones y mayúsculas)
-      const normalize = (str: string) => 
+      const normalize = (str: string) =>
         str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]/g, "");
 
       // ?type=... o ?category=...
       const typeOrCatParam = params.get('type') || params.get('category');
       if (typeOrCatParam) {
         const normParam = normalize(typeOrCatParam);
-        
+
         // 1. Intentar emparejar en CATEGORIES
-        const matchedCategory = CATEGORIES.find(c => normalize(c) === normParam);
+        const matchedCategory = categories.find(c => normalize(c) === normParam);
         if (matchedCategory) {
           setSelectedCategories([matchedCategory]);
           setIsCategoriesOpen(true);
         } else {
           // 2. Intentar emparejar en TYPES
-          const matchedType = TYPES.find(t => normalize(t) === normParam);
+          const matchedType = types.find(t => normalize(t) === normParam);
           if (matchedType) {
             setSelectedTypes([matchedType]);
             setIsTypesOpen(true);
@@ -161,7 +69,7 @@ export default function ProductCatalog() {
       const brandParam = params.get('brand') || params.get('marca');
       if (brandParam) {
         const normParam = normalize(brandParam);
-        const matchedBrand = BRANDS.find(b => normalize(b) === normParam);
+        const matchedBrand = brands.find(b => normalize(b) === normParam);
         if (matchedBrand) {
           setSelectedBrands([matchedBrand]);
           setIsBrandsOpen(true);
@@ -171,21 +79,21 @@ export default function ProductCatalog() {
   }, []);
 
   const filteredProducts = useMemo(() => {
-    return PRODUCTS_DATA.filter(product => {
-      const matchesSearch = 
+    return products.filter(product => {
+      const matchesSearch =
         product.name.toLowerCase().includes(search.toLowerCase()) ||
         product.description.toLowerCase().includes(search.toLowerCase());
-      
-      const matchesCategory = 
-        selectedCategories.length === 0 || 
+
+      const matchesCategory =
+        selectedCategories.length === 0 ||
         selectedCategories.includes(product.category);
 
-      const matchesType = 
-        selectedTypes.length === 0 || 
+      const matchesType =
+        selectedTypes.length === 0 ||
         selectedTypes.includes(product.type);
 
-      const matchesBrand = 
-        selectedBrands.length === 0 || 
+      const matchesBrand =
+        selectedBrands.length === 0 ||
         selectedBrands.includes(product.brand);
 
       return matchesSearch && matchesCategory && matchesType && matchesBrand;
@@ -202,7 +110,7 @@ export default function ProductCatalog() {
 
   const toggleFilter = (list: string[], setList: React.Dispatch<React.SetStateAction<string[]>>, item: string) => {
     setCurrentPage(1);
-    setList(prev => 
+    setList(prev =>
       prev.includes(item) ? prev.filter(x => x !== item) : [...prev, item]
     );
   };
@@ -273,7 +181,7 @@ export default function ProductCatalog() {
                   className="inline-flex items-center gap-2 bg-[#f8f9fa] border border-zinc-200 rounded-full px-4 py-1.5 text-xs text-zinc-700 font-text"
                 >
                   <span>{category}</span>
-                  <button 
+                  <button
                     onClick={() => removeFilter(setSelectedCategories, category)}
                     className="hover:text-brand cursor-pointer text-[10px] font-bold"
                     aria-label={`Eliminar filtro ${category}`}
@@ -292,7 +200,7 @@ export default function ProductCatalog() {
                   className="inline-flex items-center gap-2 bg-[#f8f9fa] border border-zinc-200 rounded-full px-4 py-1.5 text-xs text-zinc-700 font-text"
                 >
                   <span>{type}</span>
-                  <button 
+                  <button
                     onClick={() => removeFilter(setSelectedTypes, type)}
                     className="hover:text-brand cursor-pointer text-[10px] font-bold"
                     aria-label={`Eliminar filtro ${type}`}
@@ -311,7 +219,7 @@ export default function ProductCatalog() {
                   className="inline-flex items-center gap-2 bg-[#f8f9fa] border border-zinc-200 rounded-full px-4 py-1.5 text-xs text-zinc-700 font-text"
                 >
                   <span>{brand}</span>
-                  <button 
+                  <button
                     onClick={() => removeFilter(setSelectedBrands, brand)}
                     className="hover:text-brand cursor-pointer text-[10px] font-bold"
                     aria-label={`Eliminar filtro ${brand}`}
@@ -321,7 +229,7 @@ export default function ProductCatalog() {
                 </motion.span>
               ))}
             </AnimatePresence>
-            
+
             {(selectedCategories.length > 0 || selectedTypes.length > 0 || selectedBrands.length > 0 || search) && (
               <button
                 onClick={clearAllFilters}
@@ -340,16 +248,16 @@ export default function ProductCatalog() {
 
       <div className="relative min-h-[400px]">
         {paginatedProducts.length > 0 ? (
-          <motion.div 
+          <motion.div
             layout
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12"
           >
             <AnimatePresence mode="popLayout">
               {paginatedProducts.map((product, index) => (
-                <ProductCard 
-                  key={product.id} 
-                  product={product} 
-                  index={index} 
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  index={index}
                 />
               ))}
             </AnimatePresence>
@@ -372,9 +280,8 @@ export default function ProductCatalog() {
           <button
             onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
             disabled={activePage === 1}
-            className={`w-10 h-10 rounded-full flex items-center justify-center border border-zinc-200 transition-all ${
-              activePage === 1 ? 'opacity-40 cursor-not-allowed' : 'hover:bg-zinc-50 cursor-pointer text-black'
-            }`}
+            className={`w-10 h-10 rounded-full flex items-center justify-center border border-zinc-200 transition-all ${activePage === 1 ? 'opacity-40 cursor-not-allowed' : 'hover:bg-zinc-50 cursor-pointer text-black'
+              }`}
           >
             ‹
           </button>
@@ -382,9 +289,8 @@ export default function ProductCatalog() {
             <button
               key={page}
               onClick={() => setCurrentPage(page)}
-              className={`w-10 h-10 rounded-full flex items-center justify-center transition-all font-semibold ${
-                activePage === page ? 'bg-zinc-100 text-black font-bold' : 'text-zinc-600 hover:bg-zinc-50 cursor-pointer'
-              }`}
+              className={`w-10 h-10 rounded-full flex items-center justify-center transition-all font-semibold ${activePage === page ? 'bg-zinc-100 text-black font-bold' : 'text-zinc-600 hover:bg-zinc-50 cursor-pointer'
+                }`}
             >
               {page}
             </button>
@@ -392,9 +298,8 @@ export default function ProductCatalog() {
           <button
             onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
             disabled={activePage === totalPages}
-            className={`w-10 h-10 rounded-full flex items-center justify-center border border-zinc-200 transition-all ${
-              activePage === totalPages ? 'opacity-40 cursor-not-allowed' : 'hover:bg-zinc-50 cursor-pointer text-black'
-            }`}
+            className={`w-10 h-10 rounded-full flex items-center justify-center border border-zinc-200 transition-all ${activePage === totalPages ? 'opacity-40 cursor-not-allowed' : 'hover:bg-zinc-50 cursor-pointer text-black'
+              }`}
           >
             ›
           </button>
@@ -422,7 +327,7 @@ export default function ProductCatalog() {
               <div>
                 <div className="flex justify-between items-center pb-6 border-b border-zinc-100">
                   <h3 className="font-title text-2xl text-black">Personalizar búsqueda</h3>
-                  <button 
+                  <button
                     onClick={() => setIsDrawerOpen(false)}
                     className="text-zinc-400 hover:text-black transition-colors p-2 text-2xl font-bold cursor-pointer"
                   >
@@ -447,7 +352,7 @@ export default function ProductCatalog() {
                           transition={{ duration: 0.25, ease: 'easeInOut' }}
                           className="overflow-hidden mt-3 flex flex-col gap-2.5 pl-1"
                         >
-                          {CATEGORIES.map(category => (
+                          {categories.map(category => (
                             <label key={category} className="flex items-center gap-3 py-1 cursor-pointer text-sm text-zinc-600 hover:text-black font-text select-none">
                               <input
                                 type="checkbox"
@@ -479,7 +384,7 @@ export default function ProductCatalog() {
                           transition={{ duration: 0.25, ease: 'easeInOut' }}
                           className="overflow-hidden mt-3 flex flex-col gap-2.5 pl-1"
                         >
-                          {TYPES.map(type => (
+                          {types.map(type => (
                             <label key={type} className="flex items-center gap-3 py-1 cursor-pointer text-sm text-zinc-600 hover:text-black font-text select-none">
                               <input
                                 type="checkbox"
@@ -511,7 +416,7 @@ export default function ProductCatalog() {
                           transition={{ duration: 0.25, ease: 'easeInOut' }}
                           className="overflow-hidden mt-3 flex flex-col gap-2.5 pl-1"
                         >
-                          {BRANDS.map(brand => (
+                          {brands.map(brand => (
                             <label key={brand} className="flex items-center gap-3 py-1 cursor-pointer text-sm text-zinc-600 hover:text-black font-text select-none">
                               <input
                                 type="checkbox"
