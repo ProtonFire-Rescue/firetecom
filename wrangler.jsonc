@@ -1,5 +1,4 @@
 {
-  "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "firetecom_web",
   // Fecha de compatibilidad del runtime de Workers. Súbela periódicamente para
   // habilitar mejoras del runtime: https://developers.cloudflare.com/workers/configuration/compatibility-dates/
