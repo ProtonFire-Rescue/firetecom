@@ -124,8 +124,8 @@ export default function ProductDetailGallery({ images, title, badge }: ProductDe
                 key={i}
                 onClick={() => setSelectedIndex(i)}
                 className={`relative aspect-square w-20 flex-shrink-0 overflow-hidden rounded-xl bg-zinc-100 transition-all duration-300 sm:w-auto ${selectedIndex === i
-                    ? 'ring-2 ring-brand ring-offset-2'
-                    : 'opacity-55 ring-1 ring-inset ring-zinc-200 hover:opacity-100 hover:ring-zinc-300'
+                  ? 'ring-2 ring-brand ring-offset-2'
+                  : 'opacity-55 ring-1 ring-inset ring-zinc-200 hover:opacity-100 hover:ring-zinc-300'
                   }`}
                 aria-label={`Ver imagen ${i + 1}`}
                 aria-current={selectedIndex === i}
@@ -141,93 +141,92 @@ export default function ProductDetailGallery({ images, title, badge }: ProductDe
         )}
       </div>
 
-      {/* ── Lightbox — montado en document.body vía portal ─────── */}
+      {/* ── Lightbox — montado en document.body vía portal ───────
+          Columna flex: cabecera, imagen y miniaturas se reparten el alto sin
+          solaparse. La imagen se limita a su contenedor (max-h/max-w-full),
+          no a unidades de viewport, así nunca desborda. */}
       {lightboxOpen && typeof document !== 'undefined' && createPortal(
         <div
-          className="fixed inset-0 z-[9999] flex items-center justify-center"
+          className="fixed inset-0 z-[9999] flex flex-col overflow-hidden"
           style={{ backgroundColor: 'rgba(0, 0, 0, 0.92)', animation: 'lbBackdropIn 0.25s ease-out' }}
           onClick={closeLightbox}
         >
-          {/* Close button */}
-          <button
-            className="absolute right-5 top-5 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-sm transition-colors hover:bg-white/20"
-            onClick={closeLightbox}
-            aria-label="Cerrar"
-          >
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-              <path d="M4 4l10 10M14 4L4 14" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-            </svg>
-          </button>
-
-          {/* Counter */}
-          <div className="absolute left-1/2 top-5 -translate-x-1/2 text-sm font-medium tabular-nums text-white/60">
-            {lightboxIndex + 1} / {images.length}
-          </div>
-
-          {/* Prev arrow */}
-          {images.length > 1 && (
+          {/* Cabecera: contador + cerrar */}
+          <div className="relative z-10 flex shrink-0 items-center justify-between px-4 py-4 sm:px-5">
+            <span className="text-sm font-medium tabular-nums text-white/60">
+              {lightboxIndex + 1} / {images.length}
+            </span>
             <button
-              className="absolute left-4 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-sm transition-all hover:scale-105 hover:bg-white/20 sm:left-8"
-              onClick={(e) => { e.stopPropagation(); goPrev(); }}
-              aria-label="Imagen anterior"
+              className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-sm transition-colors hover:bg-white/20"
+              onClick={closeLightbox}
+              aria-label="Cerrar"
             >
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                <path d="M13 5l-5 5 5 5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <path d="M4 4l10 10M14 4L4 14" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
               </svg>
             </button>
-          )}
+          </div>
 
-          {/* Main lightbox image */}
-          <div
-            className="relative flex h-full w-full items-center justify-center px-16 py-16 sm:px-20"
-            onClick={(e) => e.stopPropagation()}
-          >
+          {/* Área de imagen: ocupa el alto restante (min-h-0 permite encoger) */}
+          <div className="relative flex min-h-0 flex-1 items-center justify-center px-12 sm:px-20">
+            {/* Prev arrow */}
+            {images.length > 1 && (
+              <button
+                className="absolute left-1.5 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-sm transition-all hover:scale-105 hover:bg-white/20 sm:left-8 sm:h-11 sm:w-11"
+                onClick={(e) => { e.stopPropagation(); goPrev(); }}
+                aria-label="Imagen anterior"
+              >
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <path d="M13 5l-5 5 5 5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </button>
+            )}
+
             <img
               key={lightboxIndex}
               src={images[lightboxIndex]}
               alt={`${title} — Vista ${lightboxIndex + 1}`}
               draggable={false}
-              className="max-w-full select-none rounded-xl object-contain"
-              style={{
-                maxWidth: 'min(90vw, 900px)',
-                maxHeight: '80vh',
-                animation: 'lbFadeIn 0.25s ease-out',
-              }}
+              onClick={(e) => e.stopPropagation()}
+              className="select-none rounded-xl object-contain max-h-full max-w-full"
+              style={{ animation: 'lbFadeIn 0.25s ease-out' }}
             />
+
+            {/* Next arrow */}
+            {images.length > 1 && (
+              <button
+                className="absolute right-1.5 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-sm transition-all hover:scale-105 hover:bg-white/20 sm:right-8 sm:h-11 sm:w-11"
+                onClick={(e) => { e.stopPropagation(); goNext(); }}
+                aria-label="Imagen siguiente"
+              >
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <path d="M7 5l5 5-5 5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </button>
+            )}
           </div>
 
-          {/* Next arrow */}
-          {images.length > 1 && (
-            <button
-              className="absolute right-4 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-sm transition-all hover:scale-105 hover:bg-white/20 sm:right-8"
-              onClick={(e) => { e.stopPropagation(); goNext(); }}
-              aria-label="Imagen siguiente"
-            >
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                <path d="M7 5l5 5-5 5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </button>
-          )}
-
-          {/* Thumbnail strip */}
+          {/* Miniaturas: scroll horizontal si no caben, centradas si sí */}
           {images.length > 1 && (
             <div
-              className="absolute bottom-5 left-1/2 flex -translate-x-1/2 gap-2"
+              className="shrink-0 overflow-x-auto px-4 pb-5 pt-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
               onClick={(e) => e.stopPropagation()}
             >
-              {images.map((img, i) => (
-                <button
-                  key={i}
-                  onClick={() => setLightboxIndex(i)}
-                  className={`h-12 w-12 overflow-hidden rounded-lg border-2 transition-all duration-200 ${lightboxIndex === i
-                      ? 'scale-110 border-white opacity-100'
+              <div className="mx-auto flex w-max gap-2">
+                {images.map((img, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setLightboxIndex(i)}
+                    className={`h-12 w-12 shrink-0 overflow-hidden rounded-lg border-2 transition-all duration-200 ${lightboxIndex === i
+                      ? 'border-white opacity-100'
                       : 'border-transparent opacity-40 hover:opacity-70'
-                    }`}
-                  aria-label={`Ver imagen ${i + 1}`}
-                >
-                  <img src={img} alt="" className="h-full w-full bg-white/10 object-contain p-1" draggable={false} />
-                </button>
-              ))}
+                      }`}
+                    aria-label={`Ver imagen ${i + 1}`}
+                  >
+                    <img src={img} alt="" className="h-full w-full bg-white/10 object-contain p-1" draggable={false} />
+                  </button>
+                ))}
+              </div>
             </div>
           )}
 

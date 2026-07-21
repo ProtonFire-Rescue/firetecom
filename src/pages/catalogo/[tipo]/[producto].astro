@@ -32,6 +32,12 @@ const productData = {
 // TODO: reemplazar por el número real de Fire Tecom.
 const whatsappNumber = '521234567890'
 
+// URL absoluta del producto, resuelta en el servidor a partir de la petición.
+// Se pasa ya formada al componente cliente para que servidor y cliente
+// rendericen el mismo href (evita el mismatch de hidratación).
+const productPath = `/catalogo/${tipo}/${producto}`
+const productUrl = new URL(productPath, Astro.url).href
+
 
 const relatedProducts = allProducts.filter((p: any) => p.type.name === tipo && p.id !== product.id).slice(0, 3).map((p: any) => ({
   name: p.name,
@@ -75,7 +81,7 @@ const productSchema = {
   image={productData.images?.[0]}
   jsonLd={productSchema}
 >
-  <main class="bg-white">
+  <main class="bg-white border border-black">
 
     <!-- ─── Breadcrumb ───────────────────────────────────────────── -->
     <nav class="px-6 py-3 border-b border-gray-100" aria-label="Breadcrumb">
@@ -88,14 +94,14 @@ const productSchema = {
           {tipoLabel}
         </a>
         <span>/</span>
-        <span class="text-gray-800 font-medium">{productoLabel}</span>
+        <span class="text-gray-800 font-medium break-all">{productoLabel}</span>
       </div>
     </nav>
 
     <!-- ─── Product Detail ───────────────────────────────────────── -->
     <section class="px-6 py-8">
       <div class="max-w-[1280px] mx-auto">
-        <div class="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-10 items-start">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
 
           <!-- Left: Gallery -->
           <div class="lg:sticky lg:top-24">
@@ -115,7 +121,7 @@ const productSchema = {
             </span>
 
             <!-- Title -->
-            <h1 class="reveal text-2xl sm:text-3xl font-bold text-gray-900 mb-4 leading-tight" style="--d:60ms">
+            <h1 class="reveal text-2xl sm:text-3xl font-bold text-gray-900 mb-4 leading-tight break-words" style="--d:60ms">
               {productData.name}
             </h1>
 
@@ -159,7 +165,7 @@ const productSchema = {
                 client:load
                 productName={productData.name}
                 productModel={productData.modelo}
-                productPath={`/catalogo/${tipo}/${producto}`}
+                productUrl={productUrl}
                 whatsappNumber={whatsappNumber}
               />
             </div>
@@ -217,7 +223,9 @@ const productSchema = {
 
     }
     <!-- ─── Descarga del catálogo ────────────────────────────────── -->
-    <section class="relative overflow-hidden min-h-[580px] flex items-center px-10">
+    <section
+      class="relative overflow-hidden min-h-[420px] sm:min-h-[520px] lg:min-h-[580px] flex items-center px-6 sm:px-10"
+    >
       <!-- Background image -->
       <img
         src="/resources/banner_detail.png"
@@ -228,11 +236,13 @@ const productSchema = {
       <div class="absolute inset-0 bg-black/10"></div>
 
       <!-- Content -->
-      <div class="relative z-10 px-6 py-32 w-full">
+      <div class="relative z-10 w-full py-16 sm:py-24 lg:py-32">
         <div class="max-w-[700px]" data-reveal>
-          <h2 class="text-white text-4xl sm:text-5xl leading-tight mb-6 font-title">
-            Descarga y accede a nuestro<br/>
-            catálogo de productos que te<br/>
+          <h2
+            class="text-white text-3xl sm:text-4xl lg:text-5xl leading-tight mb-6 font-title"
+          >
+            Descarga y accede a nuestro<br class="hidden sm:block" />
+            catálogo de productos que te<br class="hidden sm:block" />
             ofrecemos.
           </h2>
           <a

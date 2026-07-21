@@ -8,8 +8,12 @@ import { motion, AnimatePresence } from 'framer-motion'
 interface ProductInquiryActionsProps {
   productName: string
   productModel?: string
-  /** Ruta relativa del producto, p. ej. /catalogo/camaras/s1 */
-  productPath: string
+  /**
+   * URL absoluta del producto, ya resuelta en el servidor.
+   * Debe llegar formada para que servidor y cliente rendericen el mismo
+   * href y no se produzca un mismatch de hidratación.
+   */
+  productUrl: string
   /** Número de WhatsApp en formato internacional, solo dígitos. */
   whatsappNumber: string
 }
@@ -28,14 +32,10 @@ const inputClass =
 export default function ProductInquiryActions({
   productName,
   productModel,
-  productPath,
+  productUrl,
   whatsappNumber,
 }: ProductInquiryActionsProps) {
   const [modalOpen, setModalOpen] = useState(false)
-
-  // ── URL absoluta del producto (para email y WhatsApp) ──────────
-  const productUrl =
-    typeof window !== 'undefined' ? `${window.location.origin}${productPath}` : productPath
 
   // ── Mensaje de WhatsApp ────────────────────────────────────────
   const waMessage = `Hola, estoy interesado en el producto *${productName}*${
@@ -169,7 +169,7 @@ function QuoteModal({ open, onClose, productName, productModel, productUrl }: Qu
           onClick={onClose}
         >
           <motion.div
-            className="relative w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl sm:p-8"
+            className="relative max-h-[90vh] w-full max-w-md overflow-y-auto rounded-2xl bg-white p-6 shadow-2xl sm:p-8"
             initial={{ opacity: 0, y: 24, scale: 0.97 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 24, scale: 0.97 }}

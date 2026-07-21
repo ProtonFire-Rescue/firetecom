@@ -1,4 +1,4 @@
-import { useState, useRef, useId } from 'react';
+import { useState, useId } from 'react';
 
 interface AccordionItem {
   label: string;
@@ -15,7 +15,6 @@ interface ProductDetailAccordionProps {
 
 function AccordionSection({ item, index }: { item: AccordionItem; index: number }) {
   const [open, setOpen] = useState(item.defaultOpen ?? false);
-  const contentRef = useRef<HTMLDivElement>(null);
   const panelId = `${useId()}-panel`;
   const btnId = `${useId()}-btn`;
 
@@ -46,39 +45,41 @@ function AccordionSection({ item, index }: { item: AccordionItem; index: number 
         </span>
       </button>
 
+      {/* grid-rows 0fr→1fr: anima sin medir alturas, así el panel se adapta
+          solo cuando el texto refluye al cambiar el ancho del viewport. */}
       <div
         id={panelId}
         role="region"
         aria-labelledby={btnId}
-        className="overflow-hidden transition-[max-height,opacity] duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none"
-        style={{
-          maxHeight: open ? `${contentRef.current?.scrollHeight ?? 9999}px` : '0px',
-          opacity: open ? 1 : 0,
-        }}
+        className={`grid transition-[grid-template-rows,opacity] duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none ${
+          open ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
+        }`}
       >
-        <div ref={contentRef} className="pb-5">
-          {isList ? (
-            <ul className="space-y-2.5">
-              {(item.content as string[]).map((c, i) => (
-                <li
-                  key={i}
-                  className="flex items-start gap-2.5 text-sm leading-relaxed text-gray-600"
-                  style={open ? { animation: `accLineIn 0.4s ease-out ${i * 0.05}s both` } : undefined}
-                >
-                  <span className="mt-[7px] h-1.5 w-1.5 flex-shrink-0 rounded-full bg-brand" />
-                  <span>{c}</span>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <div className="space-y-3">
-              {paragraphs.map((p, i) => (
-                <p key={i} className="text-sm leading-relaxed text-gray-600">
-                  {p}
-                </p>
-              ))}
-            </div>
-          )}
+        <div className="overflow-hidden">
+          <div className="pb-5">
+            {isList ? (
+              <ul className="space-y-2.5">
+                {(item.content as string[]).map((c, i) => (
+                  <li
+                    key={i}
+                    className="flex items-start gap-2.5 text-sm leading-relaxed text-gray-600"
+                    style={open ? { animation: `accLineIn 0.4s ease-out ${i * 0.05}s both` } : undefined}
+                  >
+                    <span className="mt-[7px] h-1.5 w-1.5 flex-shrink-0 rounded-full bg-brand" />
+                    <span>{c}</span>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <div className="space-y-3">
+                {paragraphs.map((p, i) => (
+                  <p key={i} className="text-sm leading-relaxed text-gray-600">
+                    {p}
+                  </p>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
