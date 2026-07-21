@@ -4,15 +4,15 @@ import { motion } from 'framer-motion';
 const brands = [
     {
         name: "Brand 1",
-        logo: "/ftc_logo.svg"
+        logo: "/ftc_logo.png"
     },
     {
         name: "Brand 2",
-        logo: "/ftc_logo.svg"
+        logo: "/ftc_logo.png"
     },
     {
         name: "Brand 3",
-        logo: "/ftc_logo.svg"
+        logo: "/ftc_logo.png"
     }
 ]
 

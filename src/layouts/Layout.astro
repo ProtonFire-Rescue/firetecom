@@ -1,46 +1,46 @@
 ---
-import Footer from '../components/Footer.astro'
-import Menu from '../components/Menu.astro'
-import '../styles/global.css'
+import Footer from "../components/Footer.astro";
+import Menu from "../components/Menu.astro";
+import "../styles/global.css";
 
 interface Props {
-  title: string
-  description?: string
-  image?: string
+  title: string;
+  description?: string;
+  image?: string;
   /** JSON-LD adicional específico de la página (ej. Product en el detalle). */
-  jsonLd?: Record<string, unknown> | Array<Record<string, unknown>>
+  jsonLd?: Record<string, unknown> | Array<Record<string, unknown>>;
 }
 
-const SITE_NAME = 'Fire Tecom'
+const SITE_NAME = "Fire Tecom";
 const {
   title,
-  description = 'Equipos y dispositivos tácticos, de rescate y comunicación para operaciones profesionales.',
-  image = '/resources/banner_products.png',
+  description = "Equipos y dispositivos tácticos, de rescate y comunicación para operaciones profesionales.",
+  image = "/resources/banner_products.png",
   jsonLd,
-} = Astro.props
+} = Astro.props;
 
-const pageTitle = title === SITE_NAME ? title : `${title} | ${SITE_NAME}`
-const canonicalURL = new URL(Astro.url.pathname, Astro.site)
-const socialImage = new URL(image, Astro.site)
+const pageTitle = title === SITE_NAME ? title : `${title} | ${SITE_NAME}`;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const socialImage = new URL(image, Astro.site);
 
 // Datos estructurados de la organización (presentes en todas las páginas).
 const organizationSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'Organization',
+  "@context": "https://schema.org",
+  "@type": "Organization",
   name: SITE_NAME,
   url: Astro.site?.toString(),
-  logo: new URL('/favicon.svg', Astro.site).toString(),
+  logo: new URL("/favicon.svg", Astro.site).toString(),
   description:
-    'Proveedor de equipos y sistemas de comunicación crítica, seguimiento y seguridad personal para bomberos e instituciones de seguridad en Ecuador.',
-  areaServed: 'EC',
-}
+    "Proveedor de equipos y sistemas de comunicación crítica, seguimiento y seguridad personal para bomberos e instituciones de seguridad en Ecuador.",
+  areaServed: "EC",
+};
 ---
 
 <!doctype html>
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" href="/ftc_logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
     <title>{pageTitle}</title>
