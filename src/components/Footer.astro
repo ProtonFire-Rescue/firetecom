@@ -1,87 +1,120 @@
 ---
 const nav_footer = [
   {
-    title: 'Menú',
+    title: "Menú",
     options: [
-      { name: 'Inicio', href: '/' },
-      { name: 'Productos', href: '/productos' },
-      { name: 'Contactanos', href: '/contacto' },
+      { name: "Inicio", href: "/" },
+      { name: "Productos", href: "/productos" },
+      { name: "Contactanos", href: "/contacto" },
     ],
   },
   {
-    title: 'Productos',
+    title: "Productos",
     options: [
-      { name: 'Radiocomunicación', href: '/catalogo?type=comunicacion' },
-      { name: 'Seguimiento y monitoreo', href: '/catalogo?type=seguimiento-y-monitoreo' },
-      { name: 'Seguridad personal', href: '/catalogo?type=seguridad-personal' },
-      { name: 'Videovigilancia', href: '/catalogo?type=videovigilancia' },
+      { name: "Radiocomunicación", href: "/catalogo?type=comunicacion" },
+      {
+        name: "Seguimiento y monitoreo",
+        href: "/catalogo?type=seguimiento-y-monitoreo",
+      },
+      { name: "Seguridad personal", href: "/catalogo?type=seguridad-personal" },
+      { name: "Videovigilancia", href: "/catalogo?type=videovigilancia" },
     ],
   },
   {
-    title: 'Servicios',
+    title: "Servicios",
     options: [
-      { name: 'Soporte técnico', href: '#' },
-      { name: 'Asesoría técnica', href: '#' },
-      { name: 'Soporte y mantenimiento', href: '#' },
+      { name: "Soporte técnico", href: "#" },
+      { name: "Asesoría técnica", href: "#" },
+      { name: "Soporte y mantenimiento", href: "#" },
     ],
   },
-]
+];
 
 const terms = [
-  { name: 'Términos y condiciones', href: '#' },
-  { name: 'Política de privacidad', href: '#' },
-  { name: 'Política de cookies', href: '#' },
-]
+  { name: "Términos y condiciones", href: "#" },
+  { name: "Política de privacidad", href: "#" },
+  { name: "Política de cookies", href: "#" },
+];
 
-const supportEmail = 'firetecom.ftc@gmail.com'
-const salesPhone = '+593999905908'
-const salesPhoneDisplay = '+593 99 990 5908'
+const supportEmail = "firetecom.ftc@gmail.com";
+const salesPhone = "+593999905908";
+const salesPhoneDisplay = "+593 99 990 5908";
 ---
 
 <footer class="bg-black text-white">
-  <div class="mx-auto flex max-w-[1535px] flex-col gap-12 px-6 pt-16 md:px-10 md:pt-20 lg:flex-row lg:justify-between">
+  <div
+    class="mx-auto flex max-w-[1535px] flex-col gap-12 px-6 pt-16 md:px-10 md:pt-20 lg:flex-row lg:justify-between"
+  >
     <div class="flex flex-col gap-4">
-      <img src="/ftc_logo.svg" alt="Firetecom" class="h-10 w-auto invert" />
+      <img src="/ftc_logo.png" alt="Firetecom" class="w-40 invert" />
       <p class="max-w-[280px] text-[15px] font-light text-white/80">
-        Comunicación crítica y tecnología de rescate para cuerpos de bomberos e instituciones de seguridad.
+        Comunicación crítica y tecnología de rescate para cuerpos de bomberos e
+        instituciones de seguridad.
       </p>
     </div>
 
     <div class="flex flex-wrap gap-x-16 gap-y-10">
-      {nav_footer.map((data) => (
-        <div class="flex flex-col gap-5">
-          <span class="font-title text-lg">{data.title}</span>
-          <ul class="flex flex-col gap-5 text-[15px] font-light text-white">
-            {data.options.map((opt) => (
-              <li><a href={opt.href} class="transition-colors hover:text-brand">{opt.name}</a></li>
-            ))}
-          </ul>
-        </div>
-      ))}
+      {
+        nav_footer.map((data) => (
+          <div class="flex flex-col gap-5">
+            <span class="font-title text-lg">{data.title}</span>
+            <ul class="flex flex-col gap-5 text-[15px] font-light text-white">
+              {data.options.map((opt) => (
+                <li>
+                  <a href={opt.href} class="transition-colors hover:text-brand">
+                    {opt.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
 
       <div class="flex flex-col gap-5">
         <div class="flex flex-col gap-3">
           <span class="font-title text-lg">Soporte</span>
           <ul class="text-[15px] font-light text-white">
-            <li><a href={`mailto:${supportEmail}`} class="transition-colors hover:text-brand">{supportEmail}</a></li>
+            <li>
+              <a
+                href={`mailto:${supportEmail}`}
+                class="transition-colors hover:text-brand">{supportEmail}</a
+              >
+            </li>
           </ul>
         </div>
 
         <div class="flex flex-col gap-3">
           <span class="font-title text-lg">Ventas</span>
           <ul class="text-[15px] font-light text-white">
-            <li><a href={`tel:${salesPhone}`} class="transition-colors hover:text-brand">{salesPhoneDisplay}</a></li>
+            <li>
+              <a
+                href={`tel:${salesPhone}`}
+                class="transition-colors hover:text-brand"
+                >{salesPhoneDisplay}</a
+              >
+            </li>
           </ul>
         </div>
       </div>
     </div>
   </div>
 
-  <section class="mx-6 mt-12 border-t border-zinc-700 py-6 text-[15px] font-light md:mx-10">
-    <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+  <section
+    class="mx-6 mt-12 border-t border-zinc-700 py-6 text-[15px] font-light md:mx-10"
+  >
+    <div
+      class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
+    >
       <span>© 2026 FireTecom. All rights reserved.</span>
       <div class="flex flex-wrap gap-6 underline sm:gap-10">
-        {terms.map((t) => <a href={t.href} class="transition-colors hover:text-brand">{t.name}</a>)}
+        {
+          terms.map((t) => (
+            <a href={t.href} class="transition-colors hover:text-brand">
+              {t.name}
+            </a>
+          ))
+        }
       </div>
     </div>
   </section>

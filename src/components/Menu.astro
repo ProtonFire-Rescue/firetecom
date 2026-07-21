@@ -27,20 +27,18 @@ const searchProducts = fetch_products.data.map((product: any) => ({
 
 <nav
   id="site-nav"
-  class="sticky top-0 z-50 bg-black px-4 py-4 transition-transform duration-300 ease-out will-change-transform"
+  class="sticky top-0 z-50 bg-black/90 backdrop-blur-sm px-4 py-4 transition-transform duration-300 ease-out will-change-transform"
 >
   <div class="mx-auto flex max-w-[1535px] items-center justify-between gap-6">
     <!-- Logo -->
     <a href="/" class="shrink-0">
-      <img
-        src="/ftc_logo.svg"
-        alt="Firetecom"
-        class="h-8 w-auto invert md:h-10"
-      />
+      <img src="/ftc_logo.png" alt="Firetecom" class="h-12 w-auto invert" />
     </a>
 
     <!-- Navegación de escritorio -->
-    <ul class="hidden flex-1 items-center justify-center gap-8 text-white md:flex">
+    <ul
+      class="hidden flex-1 items-center justify-center gap-8 text-white md:flex"
+    >
       {
         links.map((link) =>
           link.children ? (
@@ -90,7 +88,7 @@ const searchProducts = fetch_products.data.map((product: any) => ({
       }
       <li>
         <a
-          href="/solicitar-cotizacion"
+          href="/contacto"
           class="flex items-center gap-2 transition-colors hover:text-brand"
         >
           Solicitar cotización
@@ -125,7 +123,7 @@ const searchProducts = fetch_products.data.map((product: any) => ({
           stroke-linecap="round"
           stroke-linejoin="round"
         >
-          <path d="M4 6h16M4 12h16M4 18h16" />
+          <path d="M4 6h16M4 12h16M4 18h16"></path>
         </svg>
         <svg
           data-icon="close"
@@ -137,7 +135,7 @@ const searchProducts = fetch_products.data.map((product: any) => ({
           stroke-linecap="round"
           stroke-linejoin="round"
         >
-          <path d="M6 6l12 12M18 6L6 18" />
+          <path d="M6 6l12 12M18 6L6 18"></path>
         </svg>
       </button>
     </div>
@@ -216,11 +214,9 @@ const searchProducts = fetch_products.data.map((product: any) => ({
   toggle?.addEventListener("click", () => setMenu(!menuOpen));
 
   // Cerrar el menú al pasar a escritorio
-  window
-    .matchMedia("(min-width: 768px)")
-    .addEventListener("change", (e) => {
-      if (e.matches) setMenu(false);
-    });
+  window.matchMedia("(min-width: 768px)").addEventListener("change", (e) => {
+    if (e.matches) setMenu(false);
+  });
 
   // ── Ocultar/mostrar el nav al hacer scroll ────────────────────────────────
   if (nav) {
