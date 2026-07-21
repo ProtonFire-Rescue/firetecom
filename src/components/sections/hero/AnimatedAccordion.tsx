@@ -10,18 +10,18 @@ interface AccordionItem {
 const accordionItemsMaintenance: AccordionItem[] = [
   {
     id: 1,
-    title: 'Rescate',
-    content: 'Equipos especializados para operaciones de rescate en condiciones extremas. Dispositivos robustos diseñados para soportar altas temperaturas, impactos y ambientes hostiles, garantizando comunicación vital en momentos críticos.'
+    title: 'Importación de equipos',
+    content: 'Traemos lo mejor de marcas internacionales para equipar a los bomberos con tecnología de punta. Como representantes en Ecuador, garantizamos acceso a las últimas innovaciones en sistemas de protección, comunicación y herramientas especializadas.'
   },
   {
     id: 2,
-    title: 'Incendios',
-    content: 'Sistemas de comunicación resistentes al calor para combate de incendios. Equipos certificados con materiales ignífugos que mantienen su funcionalidad incluso en condiciones de temperatura extrema.'
+    title: 'Asesoría técnica',
+    content: 'Brindamos acompañamiento personalizado para asegurar que cada institución cuente con la tecnología adecuada a sus necesidades. Nuestros especialistas colaboran estrechamente con los equipos en campo para optimizar el uso de los recursos y garantizar una respuesta efectiva en cada emergencia.'
   },
   {
     id: 3,
-    title: 'Seguridad',
-    content: 'Equipos de comunicación para fuerzas de seguridad y protección civil. Sistemas integrados que permiten coordinación efectiva en operaciones de seguridad pública.'
+    title: 'Soporte y mantenimiento',
+    content: 'Brindamos soporte técnico especializado para asegurar que los equipos funcionen correctamente. Nuestros técnicos están capacitados para brindar asistencia técnica en todo el territorio nacional, garantizando que los equipos estén en óptimas condiciones de funcionamiento.'
   }
 ];
 
@@ -44,7 +44,9 @@ const accordionItemsAbout: AccordionItem[] = [
 ];
 
 // TODO: reemplazar por una foto propia de Firetecom en public/resources — actualmente hotlinkeada de un sitio externo
-const SHOWCASE_IMAGE = "https://educacionsuperior.bqc.com.ec/pluginfile.php/117/block_cocoon_about_1/content/EEUU-BOMBEROS-EQUIPO_SIN_CARCIN%C3%93GENOS_64886.jpg";
+const SHOWCASE_IMAGE = "/resources/banner_services.jpg";
+const SHOWCASE_IMAGE_2 = "/resources/banner_about.jpg";
+
 
 function AccordionItemRow({ item, isActive, isExpanded, onMouseEnter, onMouseLeave }: { item: AccordionItem; isActive: boolean; isExpanded: boolean; onMouseEnter: () => void; onMouseLeave: () => void }) {
   return (
@@ -100,7 +102,7 @@ function AccordionItemRow({ item, isActive, isExpanded, onMouseEnter, onMouseLea
   );
 }
 
-function AccordionShowcase({ heading, items, reverse = false }: { heading: string; items: AccordionItem[]; reverse?: boolean }) {
+function AccordionShowcase({ heading, items, reverse = false, img = SHOWCASE_IMAGE }: { heading: string; items: AccordionItem[]; reverse?: boolean; img?: string }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isExpanded, setIsExpanded] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
@@ -175,7 +177,7 @@ function AccordionShowcase({ heading, items, reverse = false }: { heading: strin
               transition={{ duration: 0.8, delay: 0.2 }}
             ></motion.div>
             <motion.img
-              src={SHOWCASE_IMAGE}
+              src={img}
               alt=""
               className="absolute top-1/2 left-6 lg:left-20 w-[70%] h-[70%] object-cover -translate-y-1/2 rounded-[30px] shadow-2xl"
               initial={{ opacity: 0, scale: 0.9 }}
@@ -217,5 +219,5 @@ export function ScreenMaintenance() {
 }
 
 export function ScreenAbout() {
-  return <AccordionShowcase heading="Por qué confiar en Fire Tecom" items={accordionItemsAbout} reverse />;
+  return <AccordionShowcase heading="Por qué confiar en Fire Tecom" items={accordionItemsAbout} reverse img={SHOWCASE_IMAGE_2} />;
 }

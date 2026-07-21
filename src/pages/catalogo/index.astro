@@ -1,11 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import ProductCatalog from "../../components/sections/products/ProductCatalog.tsx";
-import {
-    getCategories,
-    getTypes,
-    getProducts,
-} from "../../services/fetch";
+import { getCategories, getTypes, getProducts } from "../../services/fetch";
 
 const fetch_categories = await getCategories({ astro: Astro });
 const fetch_types = await getTypes({ astro: Astro });

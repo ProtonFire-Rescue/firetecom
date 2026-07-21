@@ -24,14 +24,14 @@ import SectionDivider from "../components/ui/SectionDivider.astro";
         class="absolute inset-0 bg-gradient-to-r from-red-500/[0.02] via-transparent to-red-500/[0.02]"
       >
       </div>
-      <div class="max-w-[1535px] mx-auto relative">
+      <div class="mx-auto relative">
         <div class="flex flex-col gap-16">
           <HeroCardProduct
             client:visible
             img="/resources/bodycam.png"
-            title="Comunicación y seguimiento"
+            title="Seguimiento y monitoreo"
             description="Sistemas integrados de comunicación y seguimiento en tiempo real que permiten coordinar al personal en campo y conocer su ubicación durante toda la operación. Pensados para mantener el enlace constante entre el centro de mando y cada unidad desplegada, mejorando la coordinación y la seguridad del equipo."
-            url="/catalogo/seguimiento-comunicaciones"
+            url="/catalogo?type=seguimiento-y-monitoreo"
           />
           <HeroCardProduct
             client:visible
@@ -48,15 +48,9 @@ import SectionDivider from "../components/ui/SectionDivider.astro";
 
     <SolucionesOperacion client:visible />
 
-    <SectionDivider />
-
     <ScreenMaintenance client:visible />
 
-    <SectionDivider />
-
     <OurBrands client:visible />
-
-    <SectionDivider />
 
     <ScreenAbout client:visible />
 
