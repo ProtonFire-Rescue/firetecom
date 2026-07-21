@@ -62,7 +62,7 @@ export default function ContactInfo() {
             whileHover={{ scale: 1.05 }}
             transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
           >
-            <img src={channel.icon} alt="" className="w-10 h-10 shrink-0" />
+            <img src={channel.icon} alt="" className="w-10 h-10 shrink-0" loading='lazy' />
             <div className="flex flex-col text-white">
               <h3 className="font-title text-xl">{channel.title}</h3>
               <p className="font-text text-sm">{channel.value}</p>
