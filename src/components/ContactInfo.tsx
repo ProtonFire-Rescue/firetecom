@@ -33,13 +33,16 @@ const channels: ContactChannel[] = [
 export default function ContactInfo() {
   return (
     <motion.div
-      className="flex flex-col w-4/5 gap-6 relative z-10"
+      className="flex flex-col w-full max-w-lg gap-6 relative z-10 lg:w-4/5 lg:max-w-none"
       variants={container}
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: '-100px' }}
     >
-      <motion.h2 variants={item} className="font-title text-5xl text-white">
+      <motion.h2
+        variants={item}
+        className="font-title text-3xl sm:text-4xl lg:text-5xl text-white"
+      >
         ¿Dudas o consultas?
       </motion.h2>
 
@@ -48,7 +51,10 @@ export default function ContactInfo() {
         equipo de profesionales esta dispuesto a brindarte atención y asesoria personalizada.
       </motion.p>
 
-      <motion.div variants={item} className="flex justify-start gap-15">
+      <motion.div
+        variants={item}
+        className="flex flex-wrap justify-start gap-x-10 gap-y-5 sm:gap-x-15"
+      >
         {channels.map((channel) => (
           <motion.div
             key={channel.title}
@@ -56,7 +62,7 @@ export default function ContactInfo() {
             whileHover={{ scale: 1.05 }}
             transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
           >
-            <img src={channel.icon} alt="" className="w-10 h-10" />
+            <img src={channel.icon} alt="" className="w-10 h-10 shrink-0" />
             <div className="flex flex-col text-white">
               <h3 className="font-title text-xl">{channel.title}</h3>
               <p className="font-text text-sm">{channel.value}</p>

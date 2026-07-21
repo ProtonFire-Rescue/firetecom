@@ -8,15 +8,17 @@ import ContactInfo from "../components/ContactInfo.tsx";
     title="Contacto"
     description="¿Necesitas equipamiento táctico o de comunicación crítica? Contáctanos y un asesor de Fire Tecom te ayudará a encontrar la solución adecuada para tu operación."
 >
-    <section class="grid grid-cols-2 h-auto">
-        <div class="w-full h-full flex justify-center items-center py-20">
+    <section class="grid grid-cols-1 h-auto lg:grid-cols-2">
+        <div
+            class="w-full h-full flex justify-center items-center px-6 py-14 sm:px-10 lg:py-20"
+        >
             <ContactForm client:only="react" />
         </div>
         <div
-            class="h-full flex items-center justify-center relative overflow-hidden"
+            class="flex items-center justify-center relative overflow-hidden px-6 py-14 sm:px-10 lg:h-full lg:py-20"
         >
             <img
-                src="./resources/bgcall.png"
+                src="/resources/bgcall.png"
                 alt=""
                 class="absolute inset-0 object-cover brightness-60 h-full w-full animate-scale-ken-burns"
             />

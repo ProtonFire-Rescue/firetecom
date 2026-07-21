@@ -74,7 +74,9 @@ export default function ContactForm() {
       className="w-full max-w-lg flex flex-col gap-3"
     >
       <motion.div variants={item} className="space-y-2">
-        <h2 className="text-4xl font-title w-full">¿Quieres resolver algún tema en especifico?</h2>
+        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-title w-full">
+          ¿Quieres resolver algún tema en especifico?
+        </h2>
         <p className="font-text text-md">
           Rellena y haz uso del siguiente formulario con el tema que quieras tratar, un miembro del
           equipo no durará en contestarte lo más pronto posible.
