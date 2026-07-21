@@ -163,7 +163,8 @@ export async function getProducts(opts?: FetchOpts) {
   const endpoint =
     '/api/productos?fields[0]=name&fields[1]=description&fields[2]=slug&fields[3]=Genero' +
     '&populate[images][fields][0]=url&populate[images][fields][1]=alternativeText' +
-    '&populate[brand][fields][0]=name&populate[categories][fields][0]=name' +
+    '&populate[brand][fields][0]=name' +
+    '&populate[categories][fields][0]=name' +
     '&populate[model][fields][0]=name&populate[type][fields][0]=name' +
     '&populate[certifications][fields][0]=name&populate[certifications][fields][1]=description' +
     `&filters[personal_brands][nombre]=${PERSONAL_BRAND}`;

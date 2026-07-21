@@ -1,22 +1,10 @@
 import { motion } from 'framer-motion';
 
-// TODO: reemplazar por los logos y nombres reales de las marcas aliadas de Firetecom
-const brands = [
-    {
-        name: "Brand 1",
-        logo: "/ftc_logo.png"
-    },
-    {
-        name: "Brand 2",
-        logo: "/ftc_logo.png"
-    },
-    {
-        name: "Brand 3",
-        logo: "/ftc_logo.png"
-    }
-]
 
-export default function OurBrands() {
+// TODO: reemplazar por los logos y nombres reales de las marcas aliadas de Firetecom
+
+
+export default function OurBrands({ brands }: { brands: any[] }) {
     return (
         <section className="w-full px-6 py-12 md:px-16 lg:px-35 lg:py-15 flex flex-col items-start gap-3">
             <motion.div
@@ -42,7 +30,7 @@ export default function OurBrands() {
                 {brands.map((brand, index) => (
                     <motion.div
                         key={brand.name}
-                        className="flex flex-col items-center gap-2 w-[160px] h-[90px] sm:w-[200px] sm:h-[100px] bg-white rounded-[20px] border border-black/5 shadow-sm ring-1 ring-black/[0.02] hover:shadow-md hover:border-brand/15 transition-all duration-300"
+                        className="flex flex-col items-center gap-2 w-[160px] h-[160px] sm:w-[150px] sm:h-[150px] bg-white rounded-[20px] border border-black/5 shadow-sm ring-1 ring-black/[0.02] hover:shadow-md hover:border-brand/15 transition-all duration-300"
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true, margin: "-100px" }}

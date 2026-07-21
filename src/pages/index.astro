@@ -10,6 +10,22 @@ import {
 import OurBrands from "../components/sections/hero/OurBrands.tsx";
 import CTARedirect from "../components/sections/hero/CTARedirect.tsx";
 import SectionDivider from "../components/ui/SectionDivider.astro";
+import { getBrands, getProducts } from "../services/fetch";
+
+const { data: products } = await getProducts({ astro: Astro });
+const { data: brandsList } = await getBrands({ astro: Astro });
+
+const id_images = products.map((product) => product.brand.id);
+const filteredBrands = brandsList.filter((brand) =>
+  id_images.includes(brand.id),
+);
+
+const brands = filteredBrands.map((brand) => {
+  return {
+    name: brand.name,
+    logo: brand.image[0].url,
+  };
+});
 ---
 
 <Layout
@@ -50,7 +66,7 @@ import SectionDivider from "../components/ui/SectionDivider.astro";
 
     <ScreenMaintenance client:visible />
 
-    <OurBrands client:visible />
+    <OurBrands client:load brands={brands} />
 
     <ScreenAbout client:visible />
 
